@@ -14,9 +14,7 @@
     "format:fix": "prettier --write ."
   },
   "dependencies": {
-    "@radix-ui/react-slot": "^1.0.2",
     "@react-spring/web": "^9.7.3",
-    "axios": "^1.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "geist": "^1.0.0",
