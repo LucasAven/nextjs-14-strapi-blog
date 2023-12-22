@@ -42,10 +42,14 @@ export interface CollectionTypeResponse<T> {
   pagination: CollectionTypePagination;
 }
 
-export interface Blog {
+export interface Blog extends ContentTypeExtraFields {
   category: Category;
   content: string;
+  dislikes_count: number;
+  id: string;
+  likes_count: number;
   main_image: ImageContent;
+  preview_text: string;
   related_blogs: RelatedBlogsContent[];
   slug: string;
   tags: Tag[];
@@ -56,6 +60,7 @@ export interface Blog {
 // SINGLE TYPES
 export interface PageSharedData {
   footer_logo_image: ImageContent;
+  github_link: string;
   instagram_link: string;
   linkedin_link: string;
   nav_logo_image: ImageContent;
