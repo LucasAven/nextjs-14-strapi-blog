@@ -66,9 +66,22 @@ const config: Config = {
           to: { height: "0" },
         },
       },
+      screens: {
+        xs: "375px",
+        xxs: "360px",
+      },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      transitionProperty: {
+        "blog-card": "opacity, transform",
+      },
+      transitionDuration: {
+        "blog-card": ".4s, .35s",
+      },
+      transitionTimingFunction: {
+        "blog-card": "ease, cubic-bezier(.175, .885, .32, 1.275)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
