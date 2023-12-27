@@ -4,14 +4,14 @@ import Link from "next/link";
 import { StrapiImage } from "@/components/StrapiImage";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import { cn, formatStrapiDate } from "@/lib/utils";
-import { Blog } from "@/types/cms";
+import { RelatedBlogsContent } from "@/types/cms";
 
 export interface BlogCardProps {
-  data: Blog;
+  data: RelatedBlogsContent;
 }
 
 const BlogCard: FC<BlogCardProps> = ({ data }) => {
-  const { category, preview_text, publishedAt, tags, thumbnail, title } = data;
+  const { category, main_image, preview_text, publishedAt, tags, title } = data;
   return (
     <Link href={`${INTERNAL_ROUTES.BLOGS}/${data.slug}`}>
       <article className="mx-auto flex h-full transform overflow-hidden rounded-2xl border border-[#30363d] bg-secondary text-foreground transition-blog-card duration-blog-card ease-blog-card hover:scale-[.99] hover:opacity-80">
@@ -19,7 +19,7 @@ const BlogCard: FC<BlogCardProps> = ({ data }) => {
           <div className="min-h-[270px] w-full">
             <StrapiImage
               className="h-full w-full rounded-tl-2xl rounded-tr-2xl object-cover"
-              image={thumbnail}
+              image={main_image}
             />
           </div>
           <div className="flex h-full flex-col px-5 py-8">

@@ -1,26 +1,19 @@
-import { AnchorHTMLAttributes } from "react";
-import Markdown from "markdown-to-jsx";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { StrapiImage } from "@/components/StrapiImage";
-import LikesSection from "@/components/ui/BlogCard/LikesSection";
+import BlogCard from "@/components/ui/BlogCard";
+import LikeAndShareSection from "@/components/ui/BlogCard/LikeAndShareSection";
+import BlogHeader from "@/components/ui/BlogHeader";
+import CustomMarkdown from "@/components/ui/CustomMarkdown";
+import EmailCTA from "@/components/ui/EmailCTA";
 import { FEATURED_BLOG_TAG, LATEST_BLOGS_TAG } from "@/constants/fetchTags";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import {
   getCollectionType,
   getFeaturedBlog,
   getLatestBlogs,
+  StrapiCollectionTypes,
 } from "@/lib/strapi";
-
-const getCorrectAnchor = (props: AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  const commonClasses = "text-primary underline";
-
-  if (props.href.startsWith("/") && props.target !== "_blank") {
-    return <Link href={props.href} {...props} className={commonClasses} />;
-  }
-  return <a href={props.href} {...props} className={commonClasses} />;
-};
+import { cn } from "@/lib/utils";
 
 export default async function BlogPage({
   params,
@@ -34,7 +27,7 @@ export default async function BlogPage({
   }
 
   const { data } = await getCollectionType({
-    contentType: "blogs",
+    contentType: StrapiCollectionTypes.BLOGS,
     filters: { slug: { $eq: slug } },
     nextCacheConfig: {
       tags: [slug],
@@ -59,34 +52,71 @@ export default async function BlogPage({
   ].filter(Boolean);
 
   return (
-    <section className="flex min-h-screen flex-col items-center p-24">
-      <div key={blog.slug} className="flex flex-col items-center">
-        <h3 className="text-3xl font-bold">{blog.title}</h3>
-        <LikesSection
-          blogId={blog.id}
-          dislikes={blog.dislikes_count}
-          likes={blog.likes_count}
-          tagsToInvalidate={tagsToInvalidate}
-        />
-        <Markdown
-          className="prose"
-          options={{
-            overrides: {
-              a: getCorrectAnchor,
-            },
-          }}
+    <>
+      <section className="relative flex min-h-screen flex-col items-center bg-secondary ">
+        <BlogHeader blog={blog} className="pt-10" />
+        <div
+          key={blog.slug}
+          className={
+            "relative z-10 -mt-[35vw] flex h-full w-full flex-col items-center border-t border-gray-300 bg-background pt-10 sm:mt-[-30px] md:!mt-[-150px] lg:!mt-[-210px] lg:flex-row xl:!mt-[-150px] [@media_(min-width:425px)]:-mt-20"
+          }
         >
-          {blog.content}
-        </Markdown>
-        {blog.main_image && <StrapiImage image={blog.main_image} />}
-      </div>
-    </section>
+          <CustomMarkdown
+            className="ml-auto max-w-5xl space-y-6 px-6 text-base md:text-lg lg:mx-auto"
+            options={{
+              overrides: {
+                h2: {
+                  component: ({ children }) => (
+                    <h2 className="!mt-10 text-[28px] leading-tight md:!mt-16 md:text-4xl lg:text-[40px]">
+                      {children}
+                    </h2>
+                  ),
+                },
+                h3: {
+                  component: ({ children }) => (
+                    <h3 className="!mt-10 text-2xl leading-tight md:!mt-16 md:text-3xl lg:text-[32px]">
+                      {children}
+                    </h3>
+                  ),
+                },
+              },
+            }}
+          >
+            {blog.content}
+          </CustomMarkdown>
+          <LikeAndShareSection
+            blogId={blog.id}
+            className="px-4 max-md:w-full max-md:xxs:px-8 lg:sticky lg:top-20 lg:flex lg:self-start lg:pr-8"
+            dislikes={blog.dislikes_count}
+            likes={blog.likes_count}
+            tagsToInvalidate={tagsToInvalidate}
+          />
+        </div>
+        <EmailCTA className="relative w-full bg-background pt-0 md:pt-5 lg:pt-20" />
+      </section>
+      <section
+        className={cn(
+          "container relative flex flex-col gap-4 bg-background max-md:px-4",
+          !blog.related_blogs.length && "hidden",
+        )}
+      >
+        <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
+          Continue reading
+        </h2>
+        <div className="grid grid-cols-1 gap-4 py-5 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          {blog.related_blogs.length > 0 &&
+            blog.related_blogs.map((blog) => (
+              <BlogCard key={blog.slug} data={blog} />
+            ))}
+        </div>
+      </section>
+    </>
   );
 }
 
 export async function generateStaticParams() {
   const { data: blogs } = await getCollectionType({
-    contentType: "blogs",
+    contentType: StrapiCollectionTypes.BLOGS,
     pagination: { page: 1, pageSize: 9 },
   });
 

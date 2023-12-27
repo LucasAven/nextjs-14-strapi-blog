@@ -6,21 +6,48 @@ import qs from "qs";
 import { API_URL } from "@/app/config";
 import { FEATURED_BLOG_TAG, LATEST_BLOGS_TAG } from "@/constants/fetchTags";
 import { formatStrapiData } from "@/lib/utils";
-import { Blog, CollectionTypeResponse, PageSharedData } from "@/types/cms";
+import {
+  Author,
+  Blog,
+  Category,
+  CollectionTypeResponse,
+  PageSharedData,
+  Tag,
+} from "@/types/cms";
 
-type StrapiCollectionTypes = "blogs" | "category" | "tags";
-type StrapiSingleTypes = "page-shared-data";
-type StrapiContentTypes = StrapiCollectionTypes | StrapiSingleTypes;
+// COLLECTION TYPES
+export enum StrapiCollectionTypes {
+  AUTHORS = "authors",
+  BLOGS = "blogs",
+  CATEGORIES = "categories",
+  TAGS = "tags",
+}
+type CollectionTypesMap = {
+  authors: Author;
+  blogs: Blog;
+  categories: Category;
+  tags: Tag;
+};
 
 type strapiOperators = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte";
-type GetCollectionTypeParams = {
-  contentType: StrapiCollectionTypes;
-  filters?: { [key: string]: Partial<{ [key in strapiOperators]: string }> };
+type StrapiFilterValue = Partial<{ [key in strapiOperators]: string }>;
+export type StrapiFilters = {
+  [key: string]: StrapiFilterValue | StrapiFilters;
+};
+export type PaginationType = { page: number; pageSize: number };
+export type GetCollectionTypeParams<T extends StrapiCollectionTypes> = {
+  contentType: T;
+  filters?: StrapiFilters;
   id?: string;
   nextCacheConfig?: NextFetchRequestConfig;
-  pagination?: { page: number; pageSize: number };
+  pagination?: PaginationType;
   sort?: `${string}:${"asc" | "desc"}`;
 };
+
+// SINGLE TYPES
+type StrapiSingleTypes = "page-shared-data";
+
+type StrapiContentTypes = StrapiCollectionTypes | StrapiSingleTypes;
 
 export type LikeDislikeParams = {
   action: "increment" | "decrement";
@@ -37,24 +64,34 @@ const strapiClient = ky.extend({
     Authorization: `Bearer ${process.env.API_TOKEN}`,
   },
 });
-
 const getPopulateData = (contentType: StrapiContentTypes) => {
   switch (contentType) {
     case "blogs":
       return [
-        "thumbnail",
+        "author",
         "main_image",
         "related_blogs",
-        "slug",
+        "related_blogs.category",
+        "related_blogs.tags",
+        "related_blogs.main_image",
         "category",
         "tags",
       ];
-    case "category":
-      return ["blogs", "blogs.thumbnail", "blogs.slug"];
+    case "categories":
+      return ["blogs"];
     case "tags":
-      return ["blogs", "blogs.thumbnail", "blogs.slug"];
+      return ["blogs"];
+    case "authors":
+      return [
+        "blogs",
+        "blogs.category",
+        "blogs.tags",
+        "blogs.main_image",
+        "profile_image",
+        "social_media",
+      ];
     case "page-shared-data":
-      return ["nav_logo_image", "footer_logo_image"];
+      return ["nav_logo_image", "footer_logo_image", "social_media"];
     default:
       return [];
   }
@@ -65,14 +102,16 @@ const encodeParams = (params: object) =>
     encodeValuesOnly: true,
   });
 
-export async function getCollectionType({
+export async function getCollectionType<T extends StrapiCollectionTypes>({
   contentType,
   filters = {},
   id,
   nextCacheConfig,
   pagination = { page: 1, pageSize: 1 },
   sort,
-}: GetCollectionTypeParams): Promise<CollectionTypeResponse<Blog>> {
+}: GetCollectionTypeParams<T>): Promise<
+  CollectionTypeResponse<CollectionTypesMap[T]>
+> {
   const query = encodeParams({
     id,
     filters: { ...filters },
@@ -154,7 +193,7 @@ export async function updateBlogLikes({
 
 export async function getFeaturedBlog() {
   const { data: mostLikedBlogs } = await getCollectionType({
-    contentType: "blogs",
+    contentType: StrapiCollectionTypes.BLOGS,
     nextCacheConfig: {
       tags: [FEATURED_BLOG_TAG],
     },
@@ -165,7 +204,7 @@ export async function getFeaturedBlog() {
     sort: "likes_count:desc",
   });
 
-  return mostLikedBlogs[0];
+  return mostLikedBlogs[0] as Blog;
 }
 
 export async function getLatestBlogs({
@@ -176,7 +215,7 @@ export async function getLatestBlogs({
   featuredBlogSlug: string;
 }) {
   const { data: latestBlogs } = await getCollectionType({
-    contentType: "blogs",
+    contentType: StrapiCollectionTypes.BLOGS,
     nextCacheConfig: {
       tags: [LATEST_BLOGS_TAG],
     },
@@ -192,5 +231,5 @@ export async function getLatestBlogs({
     sort: "publishedAt:desc",
   });
 
-  return latestBlogs;
+  return latestBlogs as Blog[];
 }

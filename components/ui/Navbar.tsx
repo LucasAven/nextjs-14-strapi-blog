@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 
 import { StrapiImage } from "@/components/StrapiImage";
 import { INTERNAL_ROUTES } from "@/constants/routes";
+import useScrollListener from "@/hooks/useScrollListener";
 import { ImageContent } from "@/types/cms";
 
 export default function Navbar({ logo }: { logo: ImageContent }) {
   const navRef = useRef(null);
 
   // hide navbar on scroll down
-  useEffect(() => {
-    let lastScrollTop = 0;
+  useScrollListener({
+    handleScroll: () => {
+      let lastScrollTop = 0;
 
-    const handleScroll = () => {
       const scrollTop = window.scrollY;
 
       if (navRef.current) {
@@ -26,14 +27,8 @@ export default function Navbar({ logo }: { logo: ImageContent }) {
 
         lastScrollTop = scrollTop;
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    },
+  });
 
   return (
     <header

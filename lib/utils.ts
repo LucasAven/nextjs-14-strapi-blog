@@ -42,6 +42,9 @@ const parseStrapiObject = (strapiData: any) => {
         ...attributes,
       };
     }
+    // This is the case when data is an object without attributes key (e.g. a component)
+  } else if (Object.keys(strapiData).length !== 0) {
+    return strapiData;
   }
 };
 
@@ -131,5 +134,13 @@ export const formatLikes = (likes: number) => {
     } else {
       return `${mValue.toFixed(1).replace(".0", "")}m`;
     }
+  }
+};
+
+export const copyContentInClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
   }
 };

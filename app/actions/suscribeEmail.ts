@@ -5,6 +5,7 @@ export async function suscribeEmail(
   formData: FormData,
 ) {
   const email = formData.get("email");
+  console.log("suscribeEmail from server", email);
   await new Promise((resolve) => setTimeout(resolve, 1000));
   // eslint-disable-next-line sort-keys
   return { message: `Email ${email} suscribed!`, failed: false };

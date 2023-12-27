@@ -77,4 +77,9 @@ export async function likeDislikeBlog({
       updateLike: isLikeInteraction,
     });
   }
+
+  return {
+    disliked: isDislikeInteraction && !alreadyDisliked,
+    liked: isLikeInteraction && !alreadyLiked,
+  };
 }

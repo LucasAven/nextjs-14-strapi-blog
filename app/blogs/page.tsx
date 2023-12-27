@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import Pagination from "@/components/Pagination";
 import { INTERNAL_ROUTES } from "@/constants/routes";
-import { getCollectionType } from "@/lib/strapi";
+import { getCollectionType, StrapiCollectionTypes } from "@/lib/strapi";
 
 export default async function Blogs({
   searchParams,
@@ -17,7 +17,7 @@ export default async function Blogs({
   }
 
   const { data: blogs, pagination } = await getCollectionType({
-    contentType: "blogs",
+    contentType: StrapiCollectionTypes.BLOGS,
     pagination: { page: Number(page), pageSize: 1 },
   });
 

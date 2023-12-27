@@ -21,11 +21,19 @@ export interface ImageContent extends ContentTypeExtraFields {
   width: number;
 }
 
-export interface RelatedBlogsContent extends ContentTypeExtraFields {
-  id: string;
-  slug: string;
-  title: string;
-}
+export interface RelatedBlogsContent
+  extends ContentTypeExtraFields,
+    Pick<
+      Blog,
+      | "id"
+      | "slug"
+      | "title"
+      | "preview_text"
+      | "category"
+      | "main_image"
+      | "tags"
+      | "createdAt"
+    > {}
 
 export interface Category extends ContentTypeExtraFields {
   id: string;
@@ -42,7 +50,27 @@ export interface CollectionTypeResponse<T> {
   pagination: CollectionTypePagination;
 }
 
+export interface SocialMedia {
+  github: string;
+  id: string;
+  instagram: string;
+  linkedin: string;
+  twitter: string;
+  youtube: string;
+}
+
+export interface Author extends ContentTypeExtraFields {
+  blogs: RelatedBlogsContent[];
+  description: string;
+  id: string;
+  name: string;
+  profile_image: ImageContent;
+  slug: string;
+  social_media: SocialMedia;
+}
+
 export interface Blog extends ContentTypeExtraFields {
+  author: Pick<Author, "id" | "name" | "slug">;
   category: Category;
   content: string;
   dislikes_count: number;
@@ -50,20 +78,16 @@ export interface Blog extends ContentTypeExtraFields {
   likes_count: number;
   main_image: ImageContent;
   preview_text: string;
+  readingTime: string;
   related_blogs: RelatedBlogsContent[];
   slug: string;
   tags: Tag[];
-  thumbnail: ImageContent;
   title: string;
 }
 
 // SINGLE TYPES
 export interface PageSharedData {
   footer_logo_image: ImageContent;
-  github_link: string;
-  instagram_link: string;
-  linkedin_link: string;
   nav_logo_image: ImageContent;
-  twitter_link: string;
-  youtube_link: string;
+  social_media: SocialMedia;
 }

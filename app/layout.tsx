@@ -1,5 +1,6 @@
 import { GeistSans } from "geist/font";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 import "./globals.css";
 import Footer from "@/components/ui/Footer";
@@ -16,14 +17,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const {
-    github_link,
-    instagram_link,
-    linkedin_link,
-    nav_logo_image,
-    twitter_link,
-    youtube_link,
-  } = await getSingleType("page-shared-data");
+  const { nav_logo_image, social_media } =
+    await getSingleType("page-shared-data");
 
   return (
     <html lang="en">
@@ -34,16 +29,8 @@ export default async function RootLayout({
         <div className="relative z-10 rounded-bl-[50px] rounded-br-[50px] bg-background pb-10">
           {children}
         </div>
-        <Footer
-          links={{
-            github_link,
-            instagram_link,
-            linkedin_link,
-            twitter_link,
-            youtube_link,
-          }}
-          logo={nav_logo_image}
-        />
+        <Footer links={social_media} logo={nav_logo_image} />
+        <Toaster theme="dark" />
       </body>
     </html>
   );

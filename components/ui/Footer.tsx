@@ -4,49 +4,34 @@ import Link from "next/link";
 import ExternalLink from "@/components/ExternalLink";
 import { StrapiImage } from "@/components/StrapiImage";
 import { EXTERNAL_ROUTES, INTERNAL_ROUTES } from "@/constants/routes";
-import { ImageContent } from "@/types/cms";
+import { ImageContent, SocialMedia } from "@/types/cms";
 
 export interface FooterProps {
-  links: {
-    github_link: string;
-    instagram_link: string;
-    linkedin_link: string;
-    twitter_link: string;
-    youtube_link: string;
-  };
+  links: SocialMedia;
   logo: ImageContent;
 }
 
-const footer: FC<FooterProps> = ({
-  links: {
-    github_link = "",
-    instagram_link = "",
-    linkedin_link = "",
-    twitter_link = "",
-    youtube_link = "",
-  },
-  logo,
-}) => {
+const footer: FC<FooterProps> = ({ links, logo }) => {
   const FooterLinks = {
     externalLinks: [
       {
-        href: github_link || EXTERNAL_ROUTES.GITHUB,
+        href: links?.github || EXTERNAL_ROUTES.GITHUB,
         name: "Github",
       },
       {
-        href: linkedin_link || EXTERNAL_ROUTES.LINKEDIN,
+        href: links?.linkedin || EXTERNAL_ROUTES.LINKEDIN,
         name: "LinkedIn",
       },
       {
-        href: twitter_link || EXTERNAL_ROUTES.TWITTER,
+        href: links?.twitter || EXTERNAL_ROUTES.TWITTER,
         name: "Twitter",
       },
       {
-        href: youtube_link || EXTERNAL_ROUTES.YOUTUBE,
+        href: links?.youtube || EXTERNAL_ROUTES.YOUTUBE,
         name: "YouTube",
       },
       {
-        href: instagram_link || EXTERNAL_ROUTES.INSTAGRAM,
+        href: links?.instagram || EXTERNAL_ROUTES.INSTAGRAM,
         name: "Instagram",
       },
     ],

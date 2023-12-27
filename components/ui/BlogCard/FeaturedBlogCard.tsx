@@ -37,7 +37,7 @@ const FeaturedBlogCard = async ({ data }: { data: Blog }) => {
           <div className="min-h-[200px] w-full">
             <StrapiImage
               className="h-full w-full rounded-bl-2xl rounded-tl-2xl object-cover"
-              image={data.thumbnail}
+              image={data.main_image}
             />
           </div>
         </div>
