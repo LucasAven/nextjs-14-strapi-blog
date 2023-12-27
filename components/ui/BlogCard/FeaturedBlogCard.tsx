@@ -12,9 +12,6 @@ const FeaturedBlogCard = async ({ data }: { data: Blog }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2">
           <div className="flex flex-col justify-between p-6 md:p-12 md:max-lg:pb-6">
             <div className="mb-5 flex flex-col items-start gap-3 sm:mb-12 lg:mb-24">
-              <h3 className="mb-1 bg-gradient-to-tl from-[#ffb88f] via-[#d6662e] to-[#ea5853] bg-clip-text tracking-widest text-transparent sm:text-lg sm:font-semibold">
-                {data.category.name}
-              </h3>
               <h2 className="text-2xl font-medium sm:text-3xl">{data.title}</h2>
               <p className="mb-2.5 line-clamp-4 text-sm leading-relaxed tracking-wider text-gray-400 sm:line-clamp-6 sm:text-base sm:font-medium">
                 {data.preview_text}

@@ -44,6 +44,10 @@ const footer: FC<FooterProps> = ({ links, logo }) => {
         href: INTERNAL_ROUTES.BLOGS,
         name: "Blogs",
       },
+      {
+        href: INTERNAL_ROUTES.TAGS,
+        name: "Tags",
+      },
     ],
   } as const;
 

@@ -29,18 +29,13 @@ export interface RelatedBlogsContent
       | "slug"
       | "title"
       | "preview_text"
-      | "category"
       | "main_image"
       | "tags"
       | "createdAt"
     > {}
 
-export interface Category extends ContentTypeExtraFields {
-  id: string;
-  name: string;
-}
-
 export interface Tag extends ContentTypeExtraFields {
+  blogs: Blog[];
   id: string;
   name: string;
 }
@@ -71,7 +66,6 @@ export interface Author extends ContentTypeExtraFields {
 
 export interface Blog extends ContentTypeExtraFields {
   author: Pick<Author, "id" | "name" | "slug">;
-  category: Category;
   content: string;
   dislikes_count: number;
   id: string;

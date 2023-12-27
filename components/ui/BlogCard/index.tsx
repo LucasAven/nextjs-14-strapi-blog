@@ -11,7 +11,7 @@ export interface BlogCardProps {
 }
 
 const BlogCard: FC<BlogCardProps> = ({ data }) => {
-  const { category, main_image, preview_text, publishedAt, tags, title } = data;
+  const { main_image, preview_text, publishedAt, tags, title } = data;
   return (
     <Link href={`${INTERNAL_ROUTES.BLOGS}/${data.slug}`}>
       <article className="mx-auto flex h-full transform overflow-hidden rounded-2xl border border-[#30363d] bg-secondary text-foreground transition-blog-card duration-blog-card ease-blog-card hover:scale-[.99] hover:opacity-80">
@@ -25,10 +25,6 @@ const BlogCard: FC<BlogCardProps> = ({ data }) => {
           <div className="flex h-full flex-col px-5 py-8">
             <div className="mb-auto flex flex-col items-start gap-3">
               <div className="flex items-center gap-1.5">
-                <h3 className="mb-1 bg-gradient-to-tl from-[#ffb88f] via-[#d6662e] to-[#ea5853] bg-clip-text tracking-widest text-transparent sm:text-lg sm:font-semibold">
-                  {category.name}
-                </h3>
-                <div className="text-gray-400">•</div>
                 <p className="font-medium leading-relaxed tracking-wider text-gray-400">
                   {formatStrapiDate(publishedAt)}
                 </p>

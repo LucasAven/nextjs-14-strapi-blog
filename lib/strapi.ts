@@ -9,7 +9,6 @@ import { formatStrapiData } from "@/lib/utils";
 import {
   Author,
   Blog,
-  Category,
   CollectionTypeResponse,
   PageSharedData,
   Tag,
@@ -19,13 +18,11 @@ import {
 export enum StrapiCollectionTypes {
   AUTHORS = "authors",
   BLOGS = "blogs",
-  CATEGORIES = "categories",
   TAGS = "tags",
 }
 type CollectionTypesMap = {
   authors: Author;
   blogs: Blog;
-  categories: Category;
   tags: Tag;
 };
 
@@ -71,20 +68,15 @@ const getPopulateData = (contentType: StrapiContentTypes) => {
         "author",
         "main_image",
         "related_blogs",
-        "related_blogs.category",
         "related_blogs.tags",
         "related_blogs.main_image",
-        "category",
         "tags",
       ];
-    case "categories":
-      return ["blogs"];
     case "tags":
-      return ["blogs"];
+      return ["blogs", "blogs.tags", "blogs.main_image"];
     case "authors":
       return [
         "blogs",
-        "blogs.category",
         "blogs.tags",
         "blogs.main_image",
         "profile_image",

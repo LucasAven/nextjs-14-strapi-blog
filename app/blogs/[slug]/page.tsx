@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
-import BlogCard from "@/components/ui/BlogCard";
 import LikeAndShareSection from "@/components/ui/BlogCard/LikeAndShareSection";
 import BlogHeader from "@/components/ui/BlogHeader";
+import BlogsGrid from "@/components/ui/BlogsGrid";
 import CustomMarkdown from "@/components/ui/CustomMarkdown";
 import EmailCTA from "@/components/ui/EmailCTA";
 import { FEATURED_BLOG_TAG, LATEST_BLOGS_TAG } from "@/constants/fetchTags";
@@ -103,12 +103,7 @@ export default async function BlogPage({
         <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
           Continue reading
         </h2>
-        <div className="grid grid-cols-1 gap-4 py-5 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
-          {blog.related_blogs.length > 0 &&
-            blog.related_blogs.map((blog) => (
-              <BlogCard key={blog.slug} data={blog} />
-            ))}
-        </div>
+        <BlogsGrid blogs={blog.related_blogs} />
       </section>
     </>
   );

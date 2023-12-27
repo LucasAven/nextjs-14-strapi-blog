@@ -1,5 +1,5 @@
-import BlogCard from "@/components/ui/BlogCard";
 import FeaturedBlogCard from "@/components/ui/BlogCard/FeaturedBlogCard";
+import BlogsGrid from "@/components/ui/BlogsGrid";
 import EmailCTA from "@/components/ui/EmailCTA";
 import EmailForm from "@/components/ui/EmailCTA/EmailForm";
 import { getFeaturedBlog, getLatestBlogs } from "@/lib/strapi";
@@ -12,7 +12,6 @@ export default async function Home() {
   });
 
   // TODO: Add SEO
-  // TODO: Add blog page
 
   return (
     <main className="flex flex-col">
@@ -34,10 +33,7 @@ export default async function Home() {
         <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
           Latest Blogs
         </h2>
-        <div className="grid grid-cols-1 gap-4 py-5 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
-          {latestBlogs.length > 0 &&
-            latestBlogs.map((blog) => <BlogCard key={blog.slug} data={blog} />)}
-        </div>
+        <BlogsGrid blogs={latestBlogs} />
         <EmailCTA />
       </section>
     </main>

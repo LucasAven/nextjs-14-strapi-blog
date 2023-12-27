@@ -42,10 +42,10 @@ const Pagination: FC<PaginationProps> = ({
       <ul className="flex h-8 items-center space-x-px text-sm">
         <li>
           <CustomButtonLink
+            aria-label="Goto previous page"
             disabled={isFirstPage}
             href={{ query: { page: page - 1 } }}
           >
-            <span className="sr-only">Previous</span>
             <ChevronLeft aria-hidden="true" className="h-4 w-4" />
           </CustomButtonLink>
         </li>
@@ -58,10 +58,10 @@ const Pagination: FC<PaginationProps> = ({
         ))}
         <li>
           <CustomButtonLink
+            aria-label="Goto next page"
             disabled={isLastPage}
             href={{ query: { page: page + 1 } }}
           >
-            <span className="sr-only">Next</span>
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
           </CustomButtonLink>
         </li>

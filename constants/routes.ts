@@ -1,6 +1,7 @@
 export const INTERNAL_ROUTES = {
   BLOGS: "/blogs",
   HOME: "/",
+  TAGS: "/blogs/tags",
 } as const;
 
 export const EXTERNAL_ROUTES = {
