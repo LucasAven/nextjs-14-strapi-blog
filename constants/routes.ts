@@ -1,5 +1,4 @@
 export const INTERNAL_ROUTES = {
-  ABOUT: "/about",
   BLOGS: "/blogs",
   HOME: "/",
 } as const;

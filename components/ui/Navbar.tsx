@@ -53,11 +53,6 @@ export default function Navbar({ logo }: { logo: ImageContent }) {
             Blogs
           </Link>
         </h6>
-        <h6>
-          <Link className="hover:text-primary" href={INTERNAL_ROUTES.ABOUT}>
-            About Us
-          </Link>
-        </h6>
       </nav>
     </header>
   );
