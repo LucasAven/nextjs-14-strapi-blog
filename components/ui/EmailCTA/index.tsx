@@ -3,7 +3,8 @@ import { Linkedin, Twitter, Youtube } from "lucide-react";
 import EmailForm from "./EmailForm";
 
 import ExternalLink from "@/components/ExternalLink";
-import { getSingleType } from "@/lib/strapi";
+import { SHARED_DATA_TAG } from "@/constants/fetchTags";
+import { getSingleType, StrapiSingleTypes } from "@/lib/strapi";
 import { cn } from "@/lib/utils";
 
 interface EmailCTAProps {
@@ -11,7 +12,12 @@ interface EmailCTAProps {
 }
 
 export default async function EmailCTA({ className = "" }: EmailCTAProps) {
-  const { social_media } = await getSingleType("page-shared-data");
+  const { social_media } = await getSingleType({
+    contentType: StrapiSingleTypes.PAGE_SHARED_DATA,
+    nextCacheConfig: {
+      tags: [SHARED_DATA_TAG],
+    },
+  });
 
   return (
     <div className={cn("px-4 py-8", className)}>

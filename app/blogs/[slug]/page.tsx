@@ -8,6 +8,7 @@ import EmailCTA from "@/components/ui/EmailCTA";
 import { FEATURED_BLOG_TAG, LATEST_BLOGS_TAG } from "@/constants/fetchTags";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import {
+  getBlogBySlug,
   getCollectionType,
   getFeaturedBlog,
   getLatestBlogs,
@@ -26,14 +27,7 @@ export default async function BlogPage({
     redirect(INTERNAL_ROUTES.BLOGS);
   }
 
-  const { data } = await getCollectionType({
-    contentType: StrapiCollectionTypes.BLOGS,
-    filters: { slug: { $eq: slug } },
-    nextCacheConfig: {
-      tags: [slug],
-    },
-  });
-  const blog = data[0];
+  const blog = await getBlogBySlug(slug);
 
   // Cached  and decoupled request for featured blog
   const featuredBlog = await getFeaturedBlog();
@@ -112,7 +106,7 @@ export default async function BlogPage({
 export async function generateStaticParams() {
   const { data: blogs } = await getCollectionType({
     contentType: StrapiCollectionTypes.BLOGS,
-    pagination: { page: 1, pageSize: 9 },
+    pagination: { page: 1, pageSize: 99 },
   });
 
   return blogs.map((blog) => ({

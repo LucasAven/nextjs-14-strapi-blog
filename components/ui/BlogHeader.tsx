@@ -34,7 +34,7 @@ const BlogHeader: FC<BlogHeaderProps> = ({ blog, className = "" }) => {
         </h1>
         <ul className="mt-2 flex max-w-[273px] flex-wrap items-center gap-x-9 gap-y-2 sm:max-w-[100%] md:justify-center md:gap-10">
           <li className="flex items-center gap-2.5 text-xs leading-none md:text-sm">
-            <Link href={`/blogs/author/${author.slug}`}>
+            <Link href={`${INTERNAL_ROUTES.AUTHOR}/${author.slug}`}>
               <div className="group flex items-center gap-2 capitalize">
                 <span className="block text-xs text-gray-100 md:text-sm">
                   By

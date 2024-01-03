@@ -1,5 +1,5 @@
 /* eslint-disable sort-keys */
-import ky from "ky";
+import ky, { Options } from "ky";
 import { revalidateTag } from "next/cache";
 import qs from "qs";
 
@@ -14,13 +14,18 @@ import {
   Tag,
 } from "@/types/cms";
 
+type GetGenericTypeParams = {
+  fetchOptions?: Omit<Options, "next">;
+  nextCacheConfig?: NextFetchRequestConfig;
+  sort?: `${string}:${"asc" | "desc"}`;
+};
 // COLLECTION TYPES
 export enum StrapiCollectionTypes {
   AUTHORS = "authors",
   BLOGS = "blogs",
   TAGS = "tags",
 }
-type CollectionTypesMap = {
+export type CollectionTypesMap = {
   authors: Author;
   blogs: Blog;
   tags: Tag;
@@ -36,15 +41,18 @@ export type GetCollectionTypeParams<T extends StrapiCollectionTypes> = {
   contentType: T;
   filters?: StrapiFilters;
   id?: string;
-  nextCacheConfig?: NextFetchRequestConfig;
   pagination?: PaginationType;
-  sort?: `${string}:${"asc" | "desc"}`;
-};
+} & GetGenericTypeParams;
 
 // SINGLE TYPES
-type StrapiSingleTypes = "page-shared-data";
+type GetSingleTypeParams = {
+  contentType: StrapiSingleTypes;
+} & GetGenericTypeParams;
+export enum StrapiSingleTypes {
+  PAGE_SHARED_DATA = "page-shared-data",
+}
 
-type StrapiContentTypes = StrapiCollectionTypes | StrapiSingleTypes;
+export type StrapiContentTypes = StrapiCollectionTypes | StrapiSingleTypes;
 
 export type LikeDislikeParams = {
   action: "increment" | "decrement";
@@ -57,7 +65,6 @@ export type LikeDislikeParams = {
 const strapiClient = ky.extend({
   prefixUrl: API_URL,
   headers: {
-    "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.API_TOKEN}`,
   },
 });
@@ -89,13 +96,18 @@ const getPopulateData = (contentType: StrapiContentTypes) => {
   }
 };
 
-const encodeParams = (params: object) =>
-  qs.stringify(params, {
-    encodeValuesOnly: true,
-  });
+const createQueryParams = (
+  contentType: StrapiContentTypes,
+  params: object = {},
+) =>
+  qs.stringify(
+    { populate: getPopulateData(contentType), ...params },
+    { encodeValuesOnly: true },
+  );
 
 export async function getCollectionType<T extends StrapiCollectionTypes>({
   contentType,
+  fetchOptions,
   filters = {},
   id,
   nextCacheConfig,
@@ -104,16 +116,15 @@ export async function getCollectionType<T extends StrapiCollectionTypes>({
 }: GetCollectionTypeParams<T>): Promise<
   CollectionTypeResponse<CollectionTypesMap[T]>
 > {
-  const query = encodeParams({
+  const query = createQueryParams(contentType, {
     id,
     filters: { ...filters },
     pagination: { ...pagination },
-    populate: getPopulateData(contentType),
     sort: sort ? [sort] : undefined,
   });
 
   return await strapiClient
-    .get(`${contentType}?${query}`, { next: nextCacheConfig })
+    .get(`${contentType}?${query}`, { next: nextCacheConfig, ...fetchOptions })
     .json()
     .then((res) => formatStrapiData({ isPaginated: true, strapiObject: res }))
     .catch((err) => {
@@ -126,15 +137,20 @@ export async function getCollectionType<T extends StrapiCollectionTypes>({
     });
 }
 
-export async function getSingleType(
-  contentType: StrapiSingleTypes,
-): Promise<PageSharedData> {
-  const query = encodeParams({
-    populate: getPopulateData(contentType),
+export async function getSingleType({
+  contentType,
+  fetchOptions,
+  nextCacheConfig,
+  sort,
+}: GetSingleTypeParams): Promise<PageSharedData> {
+  const query = createQueryParams(contentType, {
+    sort: sort ? [sort] : undefined,
   });
-
   return await strapiClient
-    .get(`${contentType}/?${query}`)
+    .get(`${contentType}/?${query}`, {
+      next: nextCacheConfig,
+      ...fetchOptions,
+    })
     .json()
     .then(
       (res) => formatStrapiData({ isPaginated: false, strapiObject: res }).data,
@@ -224,4 +240,15 @@ export async function getLatestBlogs({
   });
 
   return latestBlogs as Blog[];
+}
+
+export async function getBlogBySlug(slug: string) {
+  const { data } = await getCollectionType({
+    contentType: StrapiCollectionTypes.BLOGS,
+    filters: { slug: { $eq: slug } },
+    nextCacheConfig: {
+      tags: [slug],
+    },
+  });
+  return data[0];
 }
