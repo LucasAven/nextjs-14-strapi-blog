@@ -1,7 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [process.env.NODE_ENV === "development" ? "127.0.0.1" : ""],
+    remotePatterns:
+      process.env.NODE_ENV === "development"
+        ? [
+            {
+              hostname: "127.0.0.1",
+              protocol: "http",
+            },
+          ]
+        : undefined,
   },
   logging: {
     fetches: {
