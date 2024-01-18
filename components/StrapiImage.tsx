@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 
-import { getFileNameWithoutExt } from "@/lib/utils";
+import { getFileNameWithoutExt, getStrapiImageUrl } from "@/lib/utils";
 import { ImageContent } from "@/types/cms";
 
 export interface StrapiImageProps {
@@ -25,13 +25,7 @@ export const StrapiImage: FC<StrapiImageProps> = ({
     height={height}
     priority={priority}
     sizes={sizes}
-    // src={url}
-    // Use when testing Strapi locally
-    src={
-      process.env.NODE_ENV === "development"
-        ? `http://127.0.0.1:1337${url}`
-        : url
-    }
+    src={getStrapiImageUrl(url)}
     style={style}
     width={width}
   />

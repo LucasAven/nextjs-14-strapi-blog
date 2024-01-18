@@ -144,3 +144,13 @@ export const copyContentInClipboard = async (text: string) => {
     console.error("Failed to copy: ", err);
   }
 };
+
+/**
+ * @param url - Url to be transformed
+ * @returns - Url with the proper protocol
+ * @example
+ * getStrapiImageUrl('/uploads/image.png'); // 'http://localhost:1337/uploads/image.png'
+ * getStrapiImageUrl('https://example.com/uploads/image.png'); // 'https://example.com/uploads/image.png'
+ * */
+export const getStrapiImageUrl = (url: string) =>
+  process.env.NODE_ENV === "development" ? `http://127.0.0.1:1337${url}` : url;
