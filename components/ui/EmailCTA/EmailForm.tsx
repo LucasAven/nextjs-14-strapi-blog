@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useFormState } from "react-dom";
+import { toast } from "sonner";
 
 import EmailInput from "./EmailInput";
 
@@ -28,6 +29,9 @@ export default function EmailForm({
   useEffect(() => {
     if (!state.failed) {
       formRef.current?.reset();
+      toast.success(state.message);
+    } else {
+      toast.error(state.message);
     }
   }, [state]);
 

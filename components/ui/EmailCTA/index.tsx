@@ -31,18 +31,21 @@ export default async function EmailCTA({ className = "" }: EmailCTAProps) {
               <p>Get the latest news and tech inspiration.</p>
               <div className="mt-4 flex justify-center space-x-4 md:justify-end">
                 <ExternalLink
+                  aria-label="Lucas' Twitter profile"
                   className="text-primary hover:text-foreground"
                   href={social_media.twitter}
                 >
                   <Twitter />
                 </ExternalLink>
                 <ExternalLink
+                  aria-label="Lucas' Youtube channel"
                   className="text-primary hover:text-foreground"
                   href={social_media.youtube}
                 >
                   <Youtube />
                 </ExternalLink>
                 <ExternalLink
+                  aria-label="Lucas' Linkedin profile"
                   className="text-primary hover:text-foreground"
                   href={social_media.linkedin}
                 >

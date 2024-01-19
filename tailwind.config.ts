@@ -69,6 +69,7 @@ const config: Config = {
       screens: {
         xs: "375px",
         xxs: "360px",
+        "pre-sm": "480px",
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

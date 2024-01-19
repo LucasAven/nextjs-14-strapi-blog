@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   Facebook,
   Link,
@@ -13,12 +13,17 @@ import { toast } from "sonner";
 
 import { likeDislikeBlog } from "@/app/actions/likeDislikeBlog";
 import ExternalLink from "@/components/ExternalLink";
+import { VisuallyHiddenText } from "@/components/VisuallyHiddenText";
 import {
   FACEBOOK_SHARE_URL,
   LINKEDIN_SHARE_URL,
   TWITTER_SHARE_URL,
 } from "@/constants/shareUrls";
-import { copyContentInClipboard } from "@/lib/utils";
+import {
+  copyContentInClipboard,
+  formatLikes,
+  isOnClientSide,
+} from "@/lib/utils";
 
 export interface LikeAndShareSectionProps {
   blogId: string;
@@ -44,6 +49,14 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
       type,
     });
 
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  useEffect(() => {
+    if (isOnClientSide) {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
+
   return (
     <div className={className}>
       <div className="overflow-hidden">
@@ -56,41 +69,67 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
             </div>
             <div className="mx-auto">
               <ul className="flex items-center justify-end gap-3 lg:flex-col lg:justify-start lg:gap-[0]">
-                <li className="h-8 w-8 rounded-full border-2 border-primary transition-all duration-300 ease-in hover:bg-primary sm:h-10 sm:w-10 lg:mb-2">
+                <li className="h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
                     aria-label="Facebbok"
                     className=" flex h-full w-full items-center justify-center"
-                    href={`${FACEBOOK_SHARE_URL}${window.location.href}`}
+                    href={`${FACEBOOK_SHARE_URL}${currentUrl}`}
                   >
-                    <Facebook fill="currentColor" size={16} />
+                    <Facebook
+                      fill="currentColor"
+                      focusable="false"
+                      size={16}
+                      aria-hidden
+                    />
                   </ExternalLink>
                 </li>
-                <li className="h-8 w-8 rounded-full border-2 border-primary transition-all duration-300 ease-in hover:bg-primary sm:h-10 sm:w-10 lg:mb-2">
+                <li className="h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
                     aria-label="Twitter"
                     className=" flex h-full w-full items-center justify-center"
-                    href={`${TWITTER_SHARE_URL}${window.location.href}&amp;text=Check%20this%20cool%20blog!`}
+                    href={`${TWITTER_SHARE_URL}${currentUrl}&amp;text=Check%20this%20cool%20blog!`}
                   >
-                    <Twitter fill="currentColor" size={16} />
+                    <Twitter
+                      fill="currentColor"
+                      focusable="false"
+                      size={16}
+                      aria-hidden
+                    />
                   </ExternalLink>
                 </li>
                 <li
                   aria-label="Linkedin"
-                  className=" h-8 w-8 rounded-full border-2 border-primary transition-all duration-300 ease-in hover:bg-primary sm:h-10 sm:w-10 lg:mb-2"
+                  className=" h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
                 >
                   <ExternalLink
                     className=" flex h-full w-full items-center justify-center"
-                    href={`${LINKEDIN_SHARE_URL}${window.location.href}`}
+                    href={`${LINKEDIN_SHARE_URL}${currentUrl}`}
                     target="_blank"
                   >
-                    <Linkedin fill="currentColor" size={16} />
+                    <Linkedin
+                      fill="currentColor"
+                      focusable="false"
+                      size={16}
+                      aria-hidden
+                    />
                   </ExternalLink>
                 </li>
                 <li>
                   <div className="h-4 w-[2px] bg-primary md:h-6 lg:w-full "></div>
                 </li>
-                <li className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary transition-all duration-300 ease-in hover:bg-primary sm:h-10 sm:w-10 lg:mb-2">
+                <li className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                  <div
+                    aria-live="polite"
+                    className="pre-sm:-top-7 absolute top-8 motion-safe:transition-all md:top-0 md:opacity-0 md:group-focus-within:-top-7 md:group-focus-within:opacity-100 md:group-hover:-top-7 md:group-hover:opacity-100"
+                    id="likeCount"
+                  >
+                    <span className="whitespace-nowrap rounded-full bg-primary px-1.5 py-0.5 text-base text-white">
+                      {formatLikes(likes)}
+                      <VisuallyHiddenText description="likes" />
+                    </span>
+                  </div>
                   <button
+                    aria-describedby="likeCount"
                     aria-label="Like this blog post"
                     className="inline-flex h-full w-full items-center text-sm leading-none"
                     onClick={() => interactWithBlog("like")}
@@ -98,12 +137,25 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     <ThumbsUp
                       className="m-auto"
                       fill="currentColor"
+                      focusable="false"
                       size={16}
+                      aria-hidden
                     />
                   </button>
                 </li>
-                <li className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary transition-all duration-300 ease-in hover:bg-primary sm:h-10 sm:w-10 lg:mb-2">
+                <li className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                  <div
+                    aria-live="polite"
+                    className="pre-sm:-top-7 absolute top-8 motion-safe:transition-all md:top-0 md:opacity-0 md:group-focus-within:-top-7 md:group-focus-within:opacity-100 md:group-hover:-top-7 md:group-hover:opacity-100"
+                    id="dislikeCount"
+                  >
+                    <span className="whitespace-nowrap rounded-full bg-primary px-1.5 py-0.5 text-base text-white">
+                      {formatLikes(dislikes)}
+                      <VisuallyHiddenText description="dislikes" />
+                    </span>
+                  </div>
                   <button
+                    aria-describedby="dislikeCount"
                     aria-label="Dislike this blog post"
                     className="inline-flex h-full w-full items-center text-sm leading-none"
                     onClick={() => interactWithBlog("dislike")}
@@ -111,20 +163,31 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     <ThumbsDown
                       className="m-auto"
                       fill="currentColor"
+                      focusable="false"
                       size={16}
+                      aria-hidden
                     />
                   </button>
                 </li>
-                <li className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary transition-all duration-300 ease-in hover:bg-primary sm:h-10 sm:w-10 lg:mb-2">
+                <li className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <button
-                    aria-label="Copy Url"
-                    className="hf-full w-full"
+                    aria-label="Copy Url to clipboard"
+                    className="h-full w-full"
                     onClick={async () => {
-                      await copyContentInClipboard(window.location.href);
-                      toast("Copied to clipboard");
+                      try {
+                        await copyContentInClipboard(currentUrl);
+                        toast("Url copied to clipboard");
+                      } catch (error) {
+                        toast("Failed to copy URL");
+                      }
                     }}
                   >
-                    <Link className="m-auto" size={16} />
+                    <Link
+                      className="m-auto"
+                      focusable="false"
+                      size={16}
+                      aria-hidden
+                    />
                   </button>
                 </li>
               </ul>

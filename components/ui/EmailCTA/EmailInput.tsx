@@ -27,11 +27,12 @@ const EmailInput: FC<EmailInputProps> = ({ className = "" }) => {
         name="email"
         placeholder="Enter Your Email"
         type="email"
+        aria-required
         required
       />
       <Button
         aria-disabled={pending}
-        aria-label="Subscribe to our newsletter"
+        aria-label="Subscribe to my newsletter"
         className="right-1 w-full rounded-full bg-primary px-6 py-2.5 hover:bg-primary/90 xs:absolute xs:w-auto"
         disabled={pending}
         type="submit"

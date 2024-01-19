@@ -4,6 +4,7 @@ import { Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 
 import { StrapiImage } from "../StrapiImage";
+import { VisuallyHiddenText } from "../VisuallyHiddenText";
 
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import useScrollListener from "@/hooks/useScrollListener";
@@ -46,13 +47,14 @@ const BlogHeader: FC<BlogHeaderProps> = ({ blog, className = "" }) => {
             </Link>
           </li>
           <li className="flex items-center gap-2.5 text-xs leading-none md:text-sm">
-            <Calendar size={16} />
+            <Calendar size={16} aria-hidden />
             <time className="text-primary" dateTime={createdAt}>
+              <VisuallyHiddenText description="Published on: " />
               {formatStrapiDate(createdAt)}
             </time>
           </li>
           <li className="flex items-center gap-2.5 text-xs leading-none md:text-sm">
-            <Clock size={16} />
+            <Clock size={16} aria-hidden />
             <span className="text-primary">{readingTime}</span>
           </li>
         </ul>
