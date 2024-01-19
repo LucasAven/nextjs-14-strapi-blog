@@ -153,7 +153,9 @@ export const copyContentInClipboard = async (text: string) => {
  * getStrapiImageUrl('https://example.com/uploads/image.png'); // 'https://example.com/uploads/image.png'
  * */
 export const getStrapiImageUrl = (url: string) =>
-  process.env.NODE_ENV === "development" ? `http://127.0.0.1:1337${url}` : url;
+  process.env.NODE_ENV === "development" && url?.startsWith("/")
+    ? `http://127.0.0.1:1337${url}`
+    : url;
 
 /**
  * Value used to determine if the code is running on the client side.
