@@ -154,3 +154,24 @@ export const copyContentInClipboard = async (text: string) => {
  * */
 export const getStrapiImageUrl = (url: string) =>
   process.env.NODE_ENV === "development" ? `http://127.0.0.1:1337${url}` : url;
+
+/**
+ * Value used to determine if the code is running on the client side.
+ *
+ * Be careful when using this value, as it can **easily**
+ * lead to NextJS hydration mismatches.
+ */
+export const isOnClientSide = !!(
+  typeof window !== "undefined" &&
+  window.document &&
+  window.document.createElement
+);
+
+/**
+ * Type that returns the same type as the input, but without the `s` at the end.
+ * @example
+ * type Test = MakeSingularWord<'tests'>; // 'test'
+ **/
+export type MakeSingularWord<T extends string> = T extends `${infer U}s`
+  ? U
+  : T;
