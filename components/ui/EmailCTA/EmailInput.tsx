@@ -26,6 +26,7 @@ const EmailInput: FC<EmailInputProps> = ({ className = "" }) => {
         className="mb-0 h-12 w-full rounded-full border border-opacity-20 bg-transparent px-6 py-3 transition-all duration-300 focus:border-gray-300 focus:outline-none xs:pr-40"
         name="email"
         placeholder="Enter Your Email"
+        title="Email Input"
         type="email"
         aria-required
         required
