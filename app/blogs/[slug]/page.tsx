@@ -47,7 +47,10 @@ export default async function BlogPage({
 
   return (
     <>
-      <section className="relative flex min-h-screen flex-col items-center bg-secondary ">
+      <main
+        className="relative flex min-h-screen flex-col items-center bg-secondary"
+        id="main"
+      >
         <BlogHeader blog={blog} className="pt-10" />
         <div
           key={blog.slug}
@@ -87,7 +90,7 @@ export default async function BlogPage({
           />
         </div>
         <EmailCTA className="relative w-full bg-background pt-0 md:pt-5 lg:pt-20" />
-      </section>
+      </main>
       <section
         className={cn(
           "container relative flex flex-col gap-4 bg-background max-md:px-4",

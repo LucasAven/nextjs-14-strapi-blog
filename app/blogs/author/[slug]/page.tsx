@@ -30,6 +30,9 @@ export default async function AuthorPage({
   const { data: authors } = await getCollectionType({
     contentType: StrapiCollectionTypes.AUTHORS,
     filters: { slug: { $eq: slug } },
+    nextCacheConfig: {
+      tags: [slug],
+    },
   });
 
   const filterByAuthor = { author: { slug: { $eq: slug } } };
@@ -58,63 +61,65 @@ export default async function AuthorPage({
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center">
-      <section className="pb-8 pt-14 md:pb-14 md:pt-20">
-        <div className="container">
-          <div className="grid items-center justify-between gap-8 md:grid-cols-2 md:gap-12 xl:items-start xl:gap-8">
-            <div className="max-w-[544px] xl:pt-10">
-              <h1 className="mb-3 text-3xl font-bold leading-tight sm:font-medium md:text-5xl 2xl:text-[52px]">
-                {author.name}
-              </h1>
-              {author.blogs.length > 0 ? (
-                <div className="flex items-center gap-1 pb-4 text-xs text-foreground md:text-sm">
-                  <FileText size={16} />
-                  {author.blogs.length} Articles
-                </div>
-              ) : null}
-              <CustomMarkdown
-                className="space-y-2 text-base md:text-lg"
-                options={{
-                  overrides: {
-                    li: {
-                      props: {
-                        className: "list-disc list-inside",
+    <>
+      <main className="flex min-h-screen flex-col items-center" id="main">
+        <section className="pb-8 pt-14 md:pb-14 md:pt-20">
+          <div className="container">
+            <div className="grid items-center justify-between gap-8 md:grid-cols-2 md:gap-12 xl:items-start xl:gap-8">
+              <div className="max-w-[544px] xl:pt-10">
+                <h1 className="mb-3 text-3xl font-bold leading-tight sm:font-medium md:text-5xl 2xl:text-[52px]">
+                  {author.name}
+                </h1>
+                {author.blogs.length > 0 ? (
+                  <div className="flex items-center gap-1 pb-4 text-xs text-foreground md:text-sm">
+                    <FileText size={16} />
+                    {author.blogs.length} Articles
+                  </div>
+                ) : null}
+                <CustomMarkdown
+                  className="space-y-2 text-base md:text-lg"
+                  options={{
+                    overrides: {
+                      li: {
+                        props: {
+                          className: "list-disc list-inside",
+                        },
                       },
                     },
-                  },
-                }}
-              >
-                {author.description}
-              </CustomMarkdown>
-              <ul className="mt-4 flex gap-3">
-                {socialMedia &&
-                  socialMedia.map(([name, value]) => {
-                    return (
-                      <li key={name}>
-                        <ExternalLink
-                          className="block rounded-full border-2 border-primary p-2 text-primary transition-blog-card hover:scale-105 hover:border-foreground hover:text-foreground"
-                          href={value}
-                        >
-                          {
-                            socialMediaIconMap[
-                              name as keyof typeof socialMediaIconMap
-                            ]
-                          }
-                        </ExternalLink>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
-            <div className="mx-auto mt-14 aspect-square h-[262px] w-[262px] rounded-full border-2 border-primary sm:h-[350px] sm:w-[350px] md:ml-auto md:mr-0 md:mt-0 md:h-[100%] md:w-[100%] xl:h-[485px] xl:w-[485px]">
-              <StrapiImage
-                className="h-full w-full rounded-full object-cover"
-                image={author.profile_image}
-              />
+                  }}
+                >
+                  {author.description}
+                </CustomMarkdown>
+                <ul className="mt-4 flex gap-3">
+                  {socialMedia &&
+                    socialMedia.map(([name, value]) => {
+                      return (
+                        <li key={name}>
+                          <ExternalLink
+                            className="block rounded-full border-2 border-primary p-2 text-primary transition-blog-card hover:scale-105 hover:border-foreground hover:text-foreground"
+                            href={value}
+                          >
+                            {
+                              socialMediaIconMap[
+                                name as keyof typeof socialMediaIconMap
+                              ]
+                            }
+                          </ExternalLink>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
+              <div className="mx-auto mt-14 aspect-square h-[262px] w-[262px] rounded-full border-2 border-primary sm:h-[350px] sm:w-[350px] md:ml-auto md:mr-0 md:mt-0 md:h-[100%] md:w-[100%] xl:h-[485px] xl:w-[485px]">
+                <StrapiImage
+                  className="h-full w-full rounded-full object-cover"
+                  image={author.profile_image}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
       <section
         className={cn(
           "container relative flex flex-col gap-4 bg-background max-md:px-4",
@@ -131,7 +136,7 @@ export default async function AuthorPage({
           pagination={paginationBlogsByAuthor}
         />
       </section>
-    </main>
+    </>
   );
 }
 

@@ -18,7 +18,7 @@ export default async function TagPage({
   const tag = tags[0];
 
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex min-h-screen flex-col items-center" id="main">
       <h1 className="pb-5 text-3xl font-bold tracking-tighter text-foreground sm:text-4xl md:pb-10 md:text-5xl lg:text-6xl">
         # {tag.name}
       </h1>

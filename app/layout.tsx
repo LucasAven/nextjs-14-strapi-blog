@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import Footer from "@/components/ui/Footer";
 import Navbar from "@/components/ui/Navbar";
+import SkipToContentLink from "@/components/ui/SkipToContentLink";
 import { SHARED_DATA_TAG } from "@/constants/fetchTags";
 import { getSingleType, StrapiSingleTypes } from "@/lib/strapi";
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <body
         className={`${GeistSans.className} relative bg-background pt-20 text-foreground`}
       >
+        <SkipToContentLink />
         <Navbar logo={nav_logo_image} />
         <div className="relative z-10 rounded-bl-[50px] rounded-br-[50px] bg-background pb-10">
           {children}

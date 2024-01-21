@@ -11,7 +11,7 @@ export default async function TagsPage() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex min-h-screen flex-col items-center" id="main">
       <h1 className="pb-5 text-3xl font-bold tracking-tighter text-foreground sm:text-4xl md:pb-10 md:text-5xl lg:text-6xl">
         Tags
       </h1>
@@ -31,4 +31,15 @@ export default async function TagsPage() {
       <EmailCTA className="mt-20" />
     </main>
   );
+}
+
+export async function generateStaticParams() {
+  const { data: tags } = await getCollectionType({
+    contentType: StrapiCollectionTypes.TAGS,
+    pagination: { page: 1, pageSize: 99 },
+  });
+
+  return tags.map((tag) => ({
+    slug: tag.name,
+  }));
 }

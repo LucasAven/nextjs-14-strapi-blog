@@ -14,7 +14,7 @@ export default async function Home() {
   // TODO: Add SEO
 
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col" id="main">
       <section className="container pb-20 pt-16 max-sm:px-4">
         <div className="mb-10 flex flex-col gap-4 text-center md:mb-20">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">

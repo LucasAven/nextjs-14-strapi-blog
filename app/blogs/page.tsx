@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import Pagination from "@/components/Pagination";
@@ -5,6 +6,10 @@ import BlogsGrid from "@/components/ui/BlogsGrid";
 import EmailCTA from "@/components/ui/EmailCTA";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import { getCollectionType, StrapiCollectionTypes } from "@/lib/strapi";
+
+export const metadata: Metadata = {
+  title: "Blogs",
+};
 
 export default async function Blogs({
   searchParams,
@@ -28,7 +33,10 @@ export default async function Blogs({
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-5 md:p-10 xl:p-14">
+    <main
+      className="flex min-h-screen flex-col items-center p-5 md:p-10 xl:p-14"
+      id="main"
+    >
       <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
         Blogs
       </h1>
