@@ -71,7 +71,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
               <ul className="flex items-center justify-end gap-3 lg:flex-col lg:justify-start lg:gap-[0]">
                 <li className="h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
-                    aria-label="Facebbok"
+                    aria-label="Share on Facebook"
                     className=" flex h-full w-full items-center justify-center"
                     href={`${FACEBOOK_SHARE_URL}${currentUrl}`}
                   >
@@ -85,7 +85,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                 </li>
                 <li className="h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
-                    aria-label="Twitter"
+                    aria-label="Share on Twitter"
                     className=" flex h-full w-full items-center justify-center"
                     href={`${TWITTER_SHARE_URL}${currentUrl}&amp;text=Check%20this%20cool%20blog!`}
                   >
@@ -97,11 +97,9 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     />
                   </ExternalLink>
                 </li>
-                <li
-                  aria-label="Linkedin"
-                  className=" h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
-                >
+                <li className=" h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
+                    aria-label="Share on Linkedin"
                     className=" flex h-full w-full items-center justify-center"
                     href={`${LINKEDIN_SHARE_URL}${currentUrl}`}
                     target="_blank"
