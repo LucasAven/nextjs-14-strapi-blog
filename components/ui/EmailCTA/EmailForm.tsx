@@ -29,7 +29,7 @@ export default function EmailForm({
   useEffect(() => {
     if (!state.failed) {
       formRef.current?.reset();
-      toast.success(state.message);
+      if (state.message) toast.success(state.message);
     } else {
       toast.error(state.message);
     }
