@@ -64,7 +64,10 @@ const BlogHeader: FC<BlogHeaderProps> = ({ blog, className = "" }) => {
               key={tag.name}
               className="text-xs font-semibold leading-none text-primary hover:underline md:text-sm"
             >
-              <Link href={`${INTERNAL_ROUTES.TAGS}/${tag.name}`}>
+              <Link
+                aria-label={`See more of ${tag.name} tag`}
+                href={`${INTERNAL_ROUTES.TAGS}/${tag.name}`}
+              >
                 #{tag.name}
               </Link>
             </li>

@@ -50,6 +50,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
     });
 
   const [currentUrl, setCurrentUrl] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     if (isOnClientSide) {
@@ -115,8 +116,13 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                 <li>
                   <div className="h-4 w-[2px] bg-primary md:h-6 lg:w-full "></div>
                 </li>
-                <li className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                <li
+                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
                   <div
+                    aria-hidden={!isHovered}
                     aria-live="polite"
                     className="pre-sm:-top-7 absolute top-8 motion-safe:transition-all md:top-0 md:opacity-0 md:group-focus-within:-top-7 md:group-focus-within:opacity-100 md:group-hover:-top-7 md:group-hover:opacity-100"
                     id="likeCount"
@@ -141,8 +147,13 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     />
                   </button>
                 </li>
-                <li className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                <li
+                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
                   <div
+                    aria-hidden={!isHovered}
                     aria-live="polite"
                     className="pre-sm:-top-7 absolute top-8 motion-safe:transition-all md:top-0 md:opacity-0 md:group-focus-within:-top-7 md:group-focus-within:opacity-100 md:group-hover:-top-7 md:group-hover:opacity-100"
                     id="dislikeCount"
