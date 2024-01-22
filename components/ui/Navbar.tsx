@@ -43,21 +43,15 @@ export default function Navbar({ logo }: { logo: ImageContent }) {
         />
       </Link>
       <nav className="flex items-center justify-center gap-4">
-        <h6>
-          <Link className="hover:text-primary" href={INTERNAL_ROUTES.HOME}>
-            Home
-          </Link>
-        </h6>
-        <h6>
-          <Link className="hover:text-primary" href={INTERNAL_ROUTES.BLOGS}>
-            Blogs
-          </Link>
-        </h6>
-        <h6>
-          <Link className="hover:text-primary" href={INTERNAL_ROUTES.TAGS}>
-            Tags
-          </Link>
-        </h6>
+        <Link className="hover:text-primary" href={INTERNAL_ROUTES.HOME}>
+          Home
+        </Link>
+        <Link className="hover:text-primary" href={INTERNAL_ROUTES.BLOGS}>
+          Blogs
+        </Link>
+        <Link className="hover:text-primary" href={INTERNAL_ROUTES.TAGS}>
+          Tags
+        </Link>
       </nav>
     </header>
   );
