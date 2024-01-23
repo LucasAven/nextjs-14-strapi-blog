@@ -29,3 +29,14 @@ export default async function TagPage({
     </main>
   );
 }
+
+export async function generateStaticParams() {
+  const { data: tags } = await getCollectionType({
+    contentType: StrapiCollectionTypes.TAGS,
+    pagination: { page: 1, pageSize: 99 },
+  });
+
+  return tags.map((tag) => ({
+    name: tag.name,
+  }));
+}
