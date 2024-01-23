@@ -64,13 +64,13 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
         <div className="sticky top-[150px] my-10 w-full lg:my-0">
           <div className="flex flex-wrap items-center justify-between gap-[25px] md:gap-[10px]">
             <div className="mx-auto pr-4 lg:hidden">
-              <h3 className="text-heading mb-0 mt-1 font-semibold leading-none">
+              <h2 className="text-heading mb-0 mt-1 font-semibold leading-none">
                 Share this!
-              </h3>
+              </h2>
             </div>
             <div className="mx-auto">
               <ul className="flex items-center justify-end gap-3 lg:flex-col lg:justify-start lg:gap-[0]">
-                <li className="h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                <li className="h-8 w-8 rounded-full border-2 border-[#CC4000] duration-300 ease-in focus-within:bg-[#CC4000] hover:bg-[#CC4000] motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
                     aria-label="Share on Facebook"
                     className=" flex h-full w-full items-center justify-center"
@@ -84,7 +84,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     />
                   </ExternalLink>
                 </li>
-                <li className="h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                <li className="h-8 w-8 rounded-full border-2 border-[#CC4000] duration-300 ease-in focus-within:bg-[#CC4000] hover:bg-[#CC4000] motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
                     aria-label="Share on Twitter"
                     className=" flex h-full w-full items-center justify-center"
@@ -98,7 +98,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     />
                   </ExternalLink>
                 </li>
-                <li className=" h-8 w-8 rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                <li className=" h-8 w-8 rounded-full border-2 border-[#CC4000] duration-300 ease-in focus-within:bg-[#CC4000] hover:bg-[#CC4000] motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <ExternalLink
                     aria-label="Share on Linkedin"
                     className=" flex h-full w-full items-center justify-center"
@@ -114,10 +114,10 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                   </ExternalLink>
                 </li>
                 <li>
-                  <div className="h-4 w-[2px] bg-primary md:h-6 lg:w-full "></div>
+                  <div className="h-4 w-[2px] bg-[#CC4000] md:h-6 lg:w-full "></div>
                 </li>
                 <li
-                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
+                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#CC4000] duration-300 ease-in focus-within:bg-[#CC4000] hover:bg-[#CC4000] motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
@@ -127,7 +127,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     className="pre-sm:-top-7 absolute top-8 motion-safe:transition-all md:top-0 md:opacity-0 md:group-focus-within:-top-7 md:group-focus-within:opacity-100 md:group-hover:-top-7 md:group-hover:opacity-100"
                     id="likeCount"
                   >
-                    <span className="whitespace-nowrap rounded-full bg-primary px-1.5 py-0.5 text-base text-white">
+                    <span className="whitespace-nowrap rounded-full bg-[#CC4000] px-1.5 py-0.5 text-base text-white">
                       {formatLikes(likes)}
                       <VisuallyHiddenText description="likes" />
                     </span>
@@ -148,7 +148,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                   </button>
                 </li>
                 <li
-                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
+                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#CC4000] duration-300 ease-in focus-within:bg-[#CC4000] hover:bg-[#CC4000] motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
@@ -158,7 +158,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     className="pre-sm:-top-7 absolute top-8 motion-safe:transition-all md:top-0 md:opacity-0 md:group-focus-within:-top-7 md:group-focus-within:opacity-100 md:group-hover:-top-7 md:group-hover:opacity-100"
                     id="dislikeCount"
                   >
-                    <span className="whitespace-nowrap rounded-full bg-primary px-1.5 py-0.5 text-base text-white">
+                    <span className="whitespace-nowrap rounded-full bg-[#CC4000] px-1.5 py-0.5 text-base text-white">
                       {formatLikes(dislikes)}
                       <VisuallyHiddenText description="dislikes" />
                     </span>
@@ -178,7 +178,7 @@ const LikeAndShareSection: FC<LikeAndShareSectionProps> = ({
                     />
                   </button>
                 </li>
-                <li className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary duration-300 ease-in focus-within:bg-primary hover:bg-primary motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
+                <li className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#CC4000] duration-300 ease-in focus-within:bg-[#CC4000] hover:bg-[#CC4000] motion-safe:transition-all sm:h-10 sm:w-10 lg:mb-2">
                   <button
                     aria-label="Copy Url to clipboard"
                     className="h-full w-full"
