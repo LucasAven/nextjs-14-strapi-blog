@@ -53,11 +53,11 @@ export default async function AuthorPage({
   );
 
   const socialMediaIconMap = {
-    github: <Github size={20} />,
-    instagram: <Instagram size={20} />,
-    linkedin: <Linkedin size={20} />,
-    twitter: <Twitter size={20} />,
-    youtube: <Youtube size={20} />,
+    github: <Github focusable="false" size={20} aria-hidden />,
+    instagram: <Instagram focusable="false" size={20} aria-hidden />,
+    linkedin: <Linkedin focusable="false" size={20} aria-hidden />,
+    twitter: <Twitter focusable="false" size={20} aria-hidden />,
+    youtube: <Youtube focusable="false" size={20} aria-hidden />,
   };
 
   return (
@@ -96,6 +96,7 @@ export default async function AuthorPage({
                       return (
                         <li key={name}>
                           <ExternalLink
+                            aria-label={`${author.name}'s ${name} link`}
                             className="block rounded-full border-2 border-primary p-2 text-primary transition-blog-card hover:scale-105 hover:border-foreground hover:text-foreground"
                             href={value}
                           >
@@ -114,6 +115,7 @@ export default async function AuthorPage({
                 <StrapiImage
                   className="h-full w-full rounded-full object-cover"
                   image={author.profile_image}
+                  priority
                 />
               </div>
             </div>
