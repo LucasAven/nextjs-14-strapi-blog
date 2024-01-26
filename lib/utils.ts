@@ -147,15 +147,26 @@ export const copyContentInClipboard = async (text: string) => {
 
 /**
  * @param url - Url to be transformed
- * @returns - Url with the proper protocol
+ * @param width - Width of the image
+ * @param height - Height of the image
+ * @returns - Url with the proper transformation params
  * @example
- * getStrapiImageUrl('/uploads/image.png'); // 'http://localhost:1337/uploads/image.png'
- * getStrapiImageUrl('https://example.com/uploads/image.png'); // 'https://example.com/uploads/image.png'
+ * const url = 'https://res.cloudinary.com/example/image/upload/v1626197449/example.png';
+ * getCloudinaryImageUrl(url, 500, 500); // 'https://res.cloudinary.com/example/f_auto/c_limit/w_500/h_500/q_auto/example.png'
  * */
-export const getStrapiImageUrl = (url: string) =>
-  process.env.NODE_ENV === "development" && url?.startsWith("/")
-    ? `http://127.0.0.1:1337${url}`
-    : url;
+export const getCloudinaryImageUrl = ({
+  height,
+  url,
+  width,
+}: {
+  height: number;
+  url: string;
+  width: number;
+}) =>
+  url.replace(
+    /\/image\/upload\/[^\/]+\//,
+    `/f_auto/c_limit/w_${width}/h_${height}/q_auto/`,
+  );
 
 /**
  * Value used to determine if the code is running on the client side.
