@@ -35,10 +35,12 @@ export default function Navbar({ logo }: { logo: ImageContent }) {
       className="fixed left-0 top-0 z-50 flex h-20 w-full justify-between bg-background p-4 text-foreground transition-all duration-500"
       ref={navRef}
     >
-      <Link aria-label="Home" href={INTERNAL_ROUTES.HOME}>
+      <Link aria-label="Home" className="w-[60px]" href={INTERNAL_ROUTES.HOME}>
         <StrapiImage
           className="h-full w-full object-contain"
+          height={48}
           image={logo}
+          width={60}
           priority
         />
       </Link>

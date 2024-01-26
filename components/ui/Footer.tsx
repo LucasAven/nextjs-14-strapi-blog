@@ -62,7 +62,9 @@ const footer: FC<FooterProps> = ({ links, logo }) => {
             <div className="h-24 w-24 overflow-hidden rounded-full bg-background transition-blog-card duration-blog-card hover:scale-95">
               <StrapiImage
                 className="h-full w-full object-contain"
+                height={96}
                 image={logo}
+                width={96}
               />
             </div>
             <span className="text-center text-xl group-hover:underline">

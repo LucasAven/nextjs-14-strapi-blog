@@ -20,6 +20,7 @@ const BlogCard: FC<BlogCardProps> = ({ data }) => {
             <StrapiImage
               className="h-full w-full rounded-tl-2xl rounded-tr-2xl object-cover"
               image={main_image}
+              sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
             />
           </div>
           <div className="flex h-full flex-col px-5 py-8">
