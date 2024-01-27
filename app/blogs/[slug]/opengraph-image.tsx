@@ -6,7 +6,7 @@ import {
   StrapiCollectionTypes,
   StrapiSingleTypes,
 } from "@/lib/strapi";
-import { formatLikes, getStrapiImageUrl } from "@/lib/utils";
+import { formatLikes } from "@/lib/utils";
 
 export const runtime = "edge";
 
@@ -51,7 +51,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
         <img
           alt={alt}
           height={size.height}
-          src={getStrapiImageUrl(post.main_image.url)}
+          src={post.main_image.url}
           style={{ objectFit: "cover" }}
           tw="w-full h-full"
           width={size.width}
@@ -74,7 +74,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
             <img
               alt="Lucas' Tech Blog Logo"
               height={nav_logo_image?.height || 80}
-              src={getStrapiImageUrl(nav_logo_image.url)}
+              src={nav_logo_image.url}
               tw="w-full h-full object-cover"
               width={nav_logo_image?.width || 80}
             />
