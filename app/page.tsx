@@ -31,7 +31,7 @@ export default async function Home() {
       </section>
       <section className="container flex flex-col gap-4 max-md:px-4">
         <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
-          Latest Blogs
+          Latest Blog Posts
         </h2>
         <BlogsGrid blogs={latestBlogs} />
         <EmailCTA />

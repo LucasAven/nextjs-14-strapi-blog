@@ -49,7 +49,7 @@ export default function Navbar({ logo }: { logo: ImageContent }) {
           Home
         </Link>
         <Link className="hover:text-primary" href={INTERNAL_ROUTES.BLOGS}>
-          Blogs
+          Blog
         </Link>
         <Link className="hover:text-primary" href={INTERNAL_ROUTES.TAGS}>
           Tags

@@ -42,7 +42,7 @@ const footer: FC<FooterProps> = ({ links, logo }) => {
       },
       {
         href: INTERNAL_ROUTES.BLOGS,
-        name: "Blogs",
+        name: "Blog",
       },
       {
         href: INTERNAL_ROUTES.TAGS,
