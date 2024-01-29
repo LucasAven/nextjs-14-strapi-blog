@@ -6,7 +6,7 @@ import {
   StrapiCollectionTypes,
   StrapiSingleTypes,
 } from "@/lib/strapi";
-import { formatLikes } from "@/lib/utils";
+import { formatLikes, getCloudinaryImageUrl } from "@/lib/utils";
 
 export const runtime = "edge";
 
@@ -51,7 +51,11 @@ export default async function Image({ params }: { params: { slug: string } }) {
         <img
           alt={alt}
           height={size.height}
-          src={post.main_image.url}
+          src={getCloudinaryImageUrl({
+            height: size.height,
+            url: post.main_image.url,
+            width: size.width,
+          })}
           style={{ objectFit: "cover" }}
           tw="w-full h-full"
           width={size.width}
@@ -73,10 +77,15 @@ export default async function Image({ params }: { params: { slug: string } }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="Lucas' Tech Blog Logo"
-              height={nav_logo_image?.height || 80}
-              src={nav_logo_image.url}
-              tw="w-full h-full object-cover"
-              width={nav_logo_image?.width || 80}
+              height={80}
+              src={getCloudinaryImageUrl({
+                height: 80,
+                url: nav_logo_image.url,
+                width: 80,
+              })}
+              style={{ objectFit: "cover" }}
+              tw="w-full h-full"
+              width={80}
             />
           </div>
           <div tw="flex items-center justify-center">
