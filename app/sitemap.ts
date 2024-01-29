@@ -1,11 +1,11 @@
 /* eslint-disable sort-keys */
 import { MetadataRoute } from "next";
 
+import { PAGE_CONSTANTS } from "@/constants/page";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import { getCollectionType, StrapiCollectionTypes } from "@/lib/strapi";
-import { getBaseUrl } from "@/lib/utils";
 
-const URL = getBaseUrl();
+const URL = PAGE_CONSTANTS.siteUrl;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: authors } = await getCollectionType({
