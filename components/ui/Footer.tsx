@@ -59,9 +59,9 @@ const footer: FC<FooterProps> = ({ links, logo }) => {
             className="group flex items-center justify-center gap-1 font-medium text-background md:justify-start"
             href={INTERNAL_ROUTES.HOME}
           >
-            <div className="h-24 w-24 overflow-hidden rounded-full bg-background transition-blog-card duration-blog-card hover:scale-95">
+            <div className="grid h-24 w-24 place-items-center overflow-hidden rounded-full bg-background transition-blog-card duration-blog-card hover:scale-95">
               <StrapiImage
-                className="h-full w-full object-contain"
+                className="h-auto w-full object-contain"
                 height={96}
                 image={logo}
                 width={96}
