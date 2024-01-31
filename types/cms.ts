@@ -60,6 +60,7 @@ export interface Author extends ContentTypeExtraFields {
   id: string;
   name: string;
   profile_image: ImageContent;
+  seo: SeoComponent;
   slug: string;
   social_media: SocialMedia;
 }
@@ -74,6 +75,7 @@ export interface Blog extends ContentTypeExtraFields {
   preview_text: string;
   readingTime: string;
   related_blogs: RelatedBlogsContent[];
+  seo: SeoComponent;
   slug: string;
   tags: Tag[];
   title: string;
@@ -84,4 +86,14 @@ export interface PageSharedData {
   footer_logo_image: ImageContent;
   nav_logo_image: ImageContent;
   social_media: SocialMedia;
+}
+
+// COMPONENTS
+export interface SeoComponent extends ContentTypeExtraFields {
+  id: string;
+  keywords?: string;
+  og_description: string;
+  og_title: string;
+  page_description: string;
+  page_title?: string;
 }

@@ -6,15 +6,64 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import ExternalLink from "@/components/ExternalLink";
 import { StrapiImage } from "@/components/StrapiImage";
 import CustomMarkdown from "@/components/ui/CustomMarkdown";
 import LoadingBlogsList from "@/components/ui/LoadingBlogsList";
+import { PAGE_CONSTANTS } from "@/constants/page";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import { getCollectionType, StrapiCollectionTypes } from "@/lib/strapi";
 import { cn } from "@/lib/utils";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const { slug } = params;
+
+  const { data } = await getCollectionType({
+    contentType: StrapiCollectionTypes.AUTHORS,
+    filters: { slug: { $eq: slug } },
+    nextCacheConfig: {
+      tags: [slug],
+    },
+  });
+  const author = data[0];
+  const seo = author.seo;
+
+  const canonicalUrl = `${PAGE_CONSTANTS.siteUrl}${INTERNAL_ROUTES.AUTHOR}/${author.slug}`;
+  const pageTitle = seo.page_title ?? author.name;
+  const pageDescription =
+    seo.page_description ??
+    `${author.name}'s author page. Discover more about the author and their blog posts!`;
+
+  /* eslint-disable sort-keys */
+  return {
+    title: pageTitle,
+    description: pageDescription,
+    keywords: seo.keywords ?? author.name,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      description: seo.og_description,
+      siteName: PAGE_CONSTANTS.siteName,
+      title: seo.og_title,
+      type: "website",
+      url: canonicalUrl,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.og_title,
+      description: seo.og_description,
+    },
+  };
+  /* eslint-enable sort-keys */
+}
 
 export default async function AuthorPage({
   params,

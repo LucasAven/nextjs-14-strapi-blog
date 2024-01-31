@@ -1,8 +1,34 @@
+import { Metadata } from "next";
+
 import FeaturedBlogCard from "@/components/ui/BlogCard/FeaturedBlogCard";
 import BlogsGrid from "@/components/ui/BlogsGrid";
 import EmailCTA from "@/components/ui/EmailCTA";
 import EmailForm from "@/components/ui/EmailCTA/EmailForm";
+import { PAGE_CONSTANTS } from "@/constants/page";
 import { getFeaturedBlog, getLatestBlogs } from "@/lib/strapi";
+
+/* eslint-disable sort-keys */
+export const metadata: Metadata = {
+  alternates: {
+    canonical: PAGE_CONSTANTS.siteUrl,
+  },
+  title: `Home | ${PAGE_CONSTANTS.siteName}`,
+  openGraph: {
+    title: PAGE_CONSTANTS.ogSiteTitle,
+    type: "website",
+    siteName: PAGE_CONSTANTS.siteName,
+    description: PAGE_CONSTANTS.ogSiteDescription,
+    url: PAGE_CONSTANTS.siteUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_CONSTANTS.ogSiteTitle,
+    description: PAGE_CONSTANTS.ogSiteDescription,
+  },
+};
+/* eslint-enable sort-keys */
+
+// TODO: make repetitive api call into a function
 
 export default async function Home() {
   const featuredBlog = await getFeaturedBlog();
@@ -10,8 +36,6 @@ export default async function Home() {
     amount: 6,
     featuredBlogSlug: featuredBlog.slug,
   });
-
-  // TODO: Add SEO
 
   return (
     <main className="flex flex-col" id="main">

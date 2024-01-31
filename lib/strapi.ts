@@ -78,6 +78,7 @@ const getPopulateData = (contentType: StrapiContentTypes) => {
         "related_blogs.tags",
         "related_blogs.main_image",
         "tags",
+        "seo",
       ];
     case "tags":
       return ["blogs", "blogs.tags", "blogs.main_image"];
@@ -88,6 +89,7 @@ const getPopulateData = (contentType: StrapiContentTypes) => {
         "blogs.main_image",
         "profile_image",
         "social_media",
+        "seo",
       ];
     case "page-shared-data":
       return ["nav_logo_image", "footer_logo_image", "social_media"];

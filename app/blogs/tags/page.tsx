@@ -1,8 +1,31 @@
+import { Metadata } from "next";
 import Link from "next/link";
 
 import EmailCTA from "@/components/ui/EmailCTA";
+import { PAGE_CONSTANTS } from "@/constants/page";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import { getCollectionType, StrapiCollectionTypes } from "@/lib/strapi";
+
+/* eslint-disable sort-keys */
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${PAGE_CONSTANTS.siteUrl}${INTERNAL_ROUTES.TAGS}`,
+  },
+  title: "All Tags",
+  openGraph: {
+    title: "All Tags",
+    type: "website",
+    siteName: PAGE_CONSTANTS.siteName,
+    description: "",
+    url: `${PAGE_CONSTANTS.siteUrl}${INTERNAL_ROUTES.TAGS}`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "All Tags",
+    description: "",
+  },
+};
+/* eslint-enable sort-keys */
 
 export default async function TagsPage() {
   const { data: tags } = await getCollectionType({

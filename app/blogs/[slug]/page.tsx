@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import LikeAndShareSection from "@/components/ui/BlogCard/LikeAndShareSection";
@@ -6,6 +7,7 @@ import BlogsGrid from "@/components/ui/BlogsGrid";
 import CustomMarkdown from "@/components/ui/CustomMarkdown";
 import EmailCTA from "@/components/ui/EmailCTA";
 import { FEATURED_BLOG_TAG, LATEST_BLOGS_TAG } from "@/constants/fetchTags";
+import { PAGE_CONSTANTS } from "@/constants/page";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import {
   getBlogBySlug,
@@ -15,6 +17,57 @@ import {
   StrapiCollectionTypes,
 } from "@/lib/strapi";
 import { cn } from "@/lib/utils";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const { slug } = params;
+
+  const { data } = await getCollectionType({
+    contentType: StrapiCollectionTypes.BLOGS,
+    filters: { slug: { $eq: slug } },
+  });
+  const blog = data[0];
+  const seo = blog.seo;
+
+  const keywords = seo.keywords ?? blog.tags.map((t) => t.name);
+  const canonicalUrl = `${PAGE_CONSTANTS.siteUrl}/${blog.slug}`;
+  const pageTitle = seo.page_title ?? blog.title;
+
+  /* eslint-disable sort-keys */
+  return {
+    title: pageTitle,
+    description: seo.page_description ?? blog.preview_text,
+    keywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    authors: [
+      {
+        name: blog.author.name,
+        url: `${PAGE_CONSTANTS.siteUrl}/${blog.author.slug}`,
+      },
+    ],
+    openGraph: {
+      authors: [blog.author.name],
+      description: seo.og_description,
+      publishedTime: blog.publishedAt,
+      siteName: PAGE_CONSTANTS.siteName,
+      tags: keywords,
+      title: seo.og_title,
+      type: "article",
+      url: canonicalUrl,
+    },
+    twitter: {
+      card: "summary_large_image",
+      description: seo.og_description,
+      title: seo.og_title,
+    },
+  };
+  /* eslint-enable sort-keys */
+}
 
 export default async function BlogPage({
   params,
@@ -63,18 +116,16 @@ export default async function BlogPage({
             options={{
               overrides: {
                 h2: {
-                  component: ({ children }) => (
-                    <h2 className="!mt-10 text-[28px] leading-tight md:!mt-16 md:text-4xl lg:text-[40px]">
-                      {children}
-                    </h2>
-                  ),
+                  props: {
+                    className:
+                      "!mt-10 mb-4 text-[28px] leading-tight md:!mt-16 md:text-4xl lg:text-[40px]",
+                  },
                 },
                 h3: {
-                  component: ({ children }) => (
-                    <h3 className="!mt-10 text-2xl leading-tight md:!mt-16 md:text-3xl lg:text-[32px]">
-                      {children}
-                    </h3>
-                  ),
+                  props: {
+                    className:
+                      "!mt-10 mb-4 text-2xl leading-tight md:!mt-16 md:text-3xl lg:text-[32px]",
+                  },
                 },
               },
             }}
@@ -90,18 +141,18 @@ export default async function BlogPage({
           />
         </div>
         <EmailCTA className="relative w-full bg-background pt-0 md:pt-5 lg:pt-20" />
+        <section
+          className={cn(
+            "container relative flex flex-col gap-4 bg-background max-md:px-4",
+            !blog.related_blogs.length && "hidden",
+          )}
+        >
+          <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
+            Continue reading
+          </h2>
+          <BlogsGrid blogs={blog.related_blogs} />
+        </section>
       </main>
-      <section
-        className={cn(
-          "container relative flex flex-col gap-4 bg-background max-md:px-4",
-          !blog.related_blogs.length && "hidden",
-        )}
-      >
-        <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
-          Continue reading
-        </h2>
-        <BlogsGrid blogs={blog.related_blogs} />
-      </section>
     </>
   );
 }
