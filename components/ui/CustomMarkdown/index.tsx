@@ -1,8 +1,11 @@
 import { AnchorHTMLAttributes, FC } from "react";
 import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
+import Image from "next/image";
 import Link from "next/link";
 
 import CalloutBlock from "./CalloutBlock";
+
+import { getCloudinaryImageUrl } from "@/lib/utils";
 
 export interface CustomMarkdownProps {
   children: string;
@@ -25,27 +28,50 @@ const CustomMarkdown: FC<CustomMarkdownProps> = ({
   options = {},
 }) => {
   const { overrides, ...rest } = options;
+
   return (
-    <Markdown
-      className={className}
-      options={{
-        overrides: {
-          a: getCorrectAnchor,
-          blockquote: {
-            component: ({ children }) => (
-              <blockquote className="text-xl italic">{children}</blockquote>
-            ),
+    <div className={className}>
+      <Markdown
+        className="w-full"
+        options={{
+          overrides: {
+            a: getCorrectAnchor,
+            blockquote: {
+              component: ({ children }) => (
+                <blockquote className="text-xl italic">{children}</blockquote>
+              ),
+            },
+            CalloutBlock: {
+              component: CalloutBlock,
+            },
+            img: {
+              component: ({ alt, src, ...rest }) => (
+                <Image
+                  alt={alt || ""}
+                  height={558}
+                  sizes="(max-width: 1024px) calc(100vw - 3rem), 87vw"
+                  src={getCloudinaryImageUrl({
+                    height: 558,
+                    url: src,
+                    width: 976,
+                  })}
+                  style={{
+                    height: "auto",
+                    width: "100%",
+                  }}
+                  width={976}
+                  {...rest}
+                />
+              ),
+            },
+            ...overrides,
           },
-          CalloutBlock: {
-            component: CalloutBlock,
-          },
-          ...overrides,
-        },
-        ...rest,
-      }}
-    >
-      {children}
-    </Markdown>
+          ...rest,
+        }}
+      >
+        {children}
+      </Markdown>
+    </div>
   );
 };
 

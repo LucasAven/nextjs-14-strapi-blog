@@ -35,6 +35,7 @@ const FeaturedBlogCard = async ({ data }: { data: Blog }) => {
             <StrapiImage
               className="h-full w-full rounded-bl-2xl rounded-tl-2xl object-cover"
               image={data.main_image}
+              sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 72rem) 50vw, 572px"
               priority
             />
           </div>

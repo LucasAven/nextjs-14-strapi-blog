@@ -154,19 +154,31 @@ export const copyContentInClipboard = async (text: string) => {
  * const url = 'https://res.cloudinary.com/example/image/upload/v1626197449/example.png';
  * getCloudinaryImageUrl(url, 500, 500); // 'https://res.cloudinary.com/example/f_auto/c_limit/w_500/h_500/q_auto/example.png'
  * */
+// export const getCloudinaryImageUrl = ({
+//   height,
+//   url,
+//   width,
+// }: {
+//   height: number;
+//   url: string;
+//   width: number;
+// }) =>
+//   url.replace(
+//     /\/image\/upload\/[^\/]+\//,
+//     `/f_auto/c_limit/w_${width}/h_${height}/q_auto/`,
+//   );
+// TODO: check if it's worth get back the original version
 export const getCloudinaryImageUrl = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   height,
   url,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   width,
 }: {
   height: number;
   url: string;
   width: number;
-}) =>
-  url.replace(
-    /\/image\/upload\/[^\/]+\//,
-    `/f_auto/c_limit/w_${width}/h_${height}/q_auto/`,
-  );
+}) => url;
 
 /**
  * Value used to determine if the code is running on the client side.

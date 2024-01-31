@@ -79,6 +79,7 @@ const BlogHeader: FC<BlogHeaderProps> = ({ blog, className = "" }) => {
           <StrapiImage
             className="h-full w-full object-cover"
             image={main_image}
+            sizes="(max-width: 768px) calc(100vw - 4rem), (max-width: 1400px) calc(100vw - calc(4rem + 100px)), 1232px"
             priority
           />
         </div>

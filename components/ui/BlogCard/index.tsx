@@ -8,9 +8,10 @@ import { RelatedBlogsContent } from "@/types/cms";
 
 export interface BlogCardProps {
   data: RelatedBlogsContent;
+  imagePriority?: boolean;
 }
 
-const BlogCard: FC<BlogCardProps> = ({ data }) => {
+const BlogCard: FC<BlogCardProps> = ({ data, imagePriority = false }) => {
   const { main_image, preview_text, publishedAt, tags, title } = data;
   return (
     <Link href={`${INTERNAL_ROUTES.BLOGS}/${data.slug}`}>
@@ -20,7 +21,8 @@ const BlogCard: FC<BlogCardProps> = ({ data }) => {
             <StrapiImage
               className="h-full w-full rounded-tl-2xl rounded-tr-2xl object-cover"
               image={main_image}
-              sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
+              priority={imagePriority}
+              sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, (max-width: 1400px) 33vw, 443px"
             />
           </div>
           <div className="flex h-full flex-col px-5 py-8">

@@ -5,6 +5,7 @@ const nextConfig = {
     webVitalsAttribution: ["CLS", "LCP"],
   },
   images: {
+    deviceSizes: [320, 640, 660, 768, 1024, 1600],
     remotePatterns: [
       {
         hostname: "res.cloudinary.com",
