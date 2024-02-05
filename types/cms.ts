@@ -55,7 +55,7 @@ export interface SocialMedia {
 }
 
 export interface Author extends ContentTypeExtraFields {
-  blogs: RelatedBlogsContent[];
+  blogs: Blog[];
   description: string;
   id: string;
   name: string;
