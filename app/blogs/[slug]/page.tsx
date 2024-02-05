@@ -143,14 +143,16 @@ export default async function BlogPage({
         <EmailCTA className="relative w-full bg-background pt-0 md:pt-5 lg:pt-20" />
         <section
           className={cn(
-            "container relative flex flex-col gap-4 bg-background max-md:px-4",
+            "w-full bg-background",
             !blog.related_blogs.length && "hidden",
           )}
         >
-          <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
-            Continue reading
-          </h2>
-          <BlogsGrid blogs={blog.related_blogs} />
+          <div className="container relative flex flex-col gap-4 max-md:px-4">
+            <h2 className="text-center text-3xl font-bold tracking-tighter md:text-left md:text-4xl lg:text-5xl">
+              Continue reading
+            </h2>
+            <BlogsGrid blogs={blog.related_blogs} />
+          </div>
         </section>
       </main>
     </>
