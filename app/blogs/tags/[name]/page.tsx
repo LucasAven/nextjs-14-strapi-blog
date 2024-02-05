@@ -59,6 +59,9 @@ export default async function TagPage({
     contentType: StrapiCollectionTypes.TAGS,
     // decodeURIComponent is needed because of the %20 in the name
     filters: { name: { $eq: decodeURIComponent(name) } },
+    nextCacheConfig: {
+      tags: [decodeURIComponent(name)],
+    },
   });
 
   const tag = tags[0];

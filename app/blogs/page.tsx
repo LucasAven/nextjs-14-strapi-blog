@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import BlogsGrid from "@/components/ui/BlogsGrid";
 import EmailCTA from "@/components/ui/EmailCTA";
+import { BLOGS_PAGE_TAG } from "@/constants/fetchTags";
 import { PAGE_CONSTANTS } from "@/constants/page";
 import { INTERNAL_ROUTES } from "@/constants/routes";
 import { getCollectionType, StrapiCollectionTypes } from "@/lib/strapi";
@@ -49,6 +50,9 @@ export async function generateMetadata({
 
   const { pagination } = await getCollectionType({
     contentType: StrapiCollectionTypes.BLOGS,
+    nextCacheConfig: {
+      tags: [BLOGS_PAGE_TAG],
+    },
     pagination: { page: parsedPage, pageSize: 1 },
   });
 
@@ -104,6 +108,9 @@ export default async function Blogs({
 
   const { data: blogs, pagination } = await getCollectionType({
     contentType: StrapiCollectionTypes.BLOGS,
+    nextCacheConfig: {
+      tags: [BLOGS_PAGE_TAG],
+    },
     pagination: { page: parsedPage, pageSize: 3 },
   });
 

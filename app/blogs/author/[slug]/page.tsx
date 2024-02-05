@@ -90,6 +90,9 @@ export default async function AuthorPage({
   const { data: authorBlogs, pagination } = await getCollectionType({
     contentType: StrapiCollectionTypes.BLOGS,
     filters: filterByAuthor,
+    nextCacheConfig: {
+      tags: [slug],
+    },
     pagination: paginationBlogsByAuthor,
   });
 
