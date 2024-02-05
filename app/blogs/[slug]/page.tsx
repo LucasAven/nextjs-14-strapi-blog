@@ -143,7 +143,7 @@ export default async function BlogPage({
         <EmailCTA className="relative w-full bg-background pt-0 md:pt-5 lg:pt-20" />
         <section
           className={cn(
-            "w-full bg-background",
+            "relative w-full bg-background",
             !blog.related_blogs.length && "hidden",
           )}
         >
