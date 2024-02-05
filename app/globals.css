@@ -46,6 +46,15 @@
   }
 }
 
+.shadow-404 {
+  text-shadow:
+    7px 7px 0px #ff4500,
+    -1px -1px 0px #ff4500,
+    1px -1px 0px #ff4500,
+    -1px 1px 0px #ff4500,
+    1px 1px 0px #ff4500;
+}
+
 @layer base {
   * {
     @apply border-border;
