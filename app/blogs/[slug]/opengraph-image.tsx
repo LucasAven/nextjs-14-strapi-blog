@@ -1,12 +1,7 @@
 import { ImageResponse } from "next/og";
 
 import { API_TOKEN, API_URL } from "@/app/config";
-import {
-  // getCollectionType,
-  getSingleType,
-  // StrapiCollectionTypes,
-  StrapiSingleTypes,
-} from "@/lib/strapi";
+import { getSingleType, StrapiSingleTypes } from "@/lib/strapi";
 import { formatLikes, getCloudinaryImageUrl } from "@/lib/utils";
 
 export const runtime = "edge";
@@ -29,35 +24,20 @@ export default async function Image({ params }: { params: { slug: string } }) {
     },
   });
 
-  let blogs;
-  try {
-    const data = await fetch(
-      `${API_URL}/blogs?populate[0]=main_image&filters[slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=1`,
-      {
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
+  // Fetch the blog post this way since using the strapiClient fails on prod for some reason
+  const jsonData = await fetch(
+    `${API_URL}/blogs?populate[0]=main_image&filters[slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=1`,
+    {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
       },
-    );
-    const a = await data.json();
-    blogs = {
-      ...a.data[0].attributes,
-      main_image: a.data[0].attributes.main_image.data.attributes,
-    };
-  } catch (error) {
-    console.error("\n\n\n\n\nerror", error);
-  }
-  console.log("\n\n\n\n\nblogs", blogs);
-  // const { data: blogs } = await getCollectionType({
-  //   contentType: StrapiCollectionTypes.BLOGS,
-  //   fetchOptions: {
-  //     cache: "no-store",
-  //   },
-  //   filters: { slug: { $eq: slug } },
-  // });
-
-  const post = blogs;
-  // const post = blogs[0];
+    },
+  );
+  const data = await jsonData.json();
+  const post = {
+    ...data.data[0].attributes,
+    main_image: data.data[0].attributes.main_image.data.attributes,
+  };
 
   const getFont = async () => {
     const res = await fetch(
