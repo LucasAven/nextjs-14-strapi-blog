@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { NEXT_PUBLIC_DOMAIN } from "@/app/config";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -206,5 +208,5 @@ export const getBaseUrl = () => {
     return "http://localhost:3000";
   }
 
-  return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  return NEXT_PUBLIC_DOMAIN;
 };

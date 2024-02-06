@@ -3,7 +3,7 @@ import ky, { Options } from "ky";
 import { revalidateTag } from "next/cache";
 import qs from "qs";
 
-import { API_URL } from "@/app/config";
+import { API_TOKEN, API_URL } from "@/app/config";
 import { FEATURED_BLOG_TAG, LATEST_BLOGS_TAG } from "@/constants/fetchTags";
 import { formatStrapiData } from "@/lib/utils";
 import {
@@ -65,7 +65,7 @@ export type LikeDislikeParams = {
 const strapiClient = ky.extend({
   prefixUrl: API_URL,
   headers: {
-    Authorization: `Bearer ${process.env.API_TOKEN}`,
+    Authorization: `Bearer ${API_TOKEN}`,
   },
 });
 const getPopulateData = (contentType: StrapiContentTypes) => {

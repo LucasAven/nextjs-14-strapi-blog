@@ -1,1 +1,2 @@
-export const { API_URL, STRAPI_URL } = process.env;
+export const { API_TOKEN, API_URL, NEXT_PUBLIC_DOMAIN, WEBHOOK_TOKEN } =
+  process.env;

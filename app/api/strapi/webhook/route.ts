@@ -2,6 +2,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
+import { WEBHOOK_TOKEN } from "@/app/config";
 import {
   BLOGS_PAGE_TAG,
   FEATURED_BLOG_TAG,
@@ -109,7 +110,7 @@ function revalidateBlog({
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const endpointSecret = process.env.WEBHOOK_TOKEN;
+  const endpointSecret = WEBHOOK_TOKEN;
   const sig = headers().get("Authorization")?.replace("Bearer ", "") || "";
 
   if (!endpointSecret) {
