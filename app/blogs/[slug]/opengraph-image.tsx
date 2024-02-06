@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
 
+import { API_TOKEN, API_URL } from "@/app/config";
 import {
-  getCollectionType,
+  // getCollectionType,
   getSingleType,
-  StrapiCollectionTypes,
+  // StrapiCollectionTypes,
   StrapiSingleTypes,
 } from "@/lib/strapi";
 import { formatLikes, getCloudinaryImageUrl } from "@/lib/utils";
@@ -27,15 +28,36 @@ export default async function Image({ params }: { params: { slug: string } }) {
       cache: "no-store",
     },
   });
-  const { data: blogs } = await getCollectionType({
-    contentType: StrapiCollectionTypes.BLOGS,
-    fetchOptions: {
-      cache: "no-store",
-    },
-    filters: { slug: { $eq: slug } },
-  });
 
-  const post = blogs[0];
+  let blogs;
+  try {
+    const data = await fetch(
+      `${API_URL}/blogs?populate[0]=main_image&filters[slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+      },
+    );
+    const a = await data.json();
+    blogs = {
+      ...a.data[0].attributes,
+      main_image: a.data[0].attributes.main_image.data.attributes,
+    };
+  } catch (error) {
+    console.error("\n\n\n\n\nerror", error);
+  }
+  console.log("\n\n\n\n\nblogs", blogs);
+  // const { data: blogs } = await getCollectionType({
+  //   contentType: StrapiCollectionTypes.BLOGS,
+  //   fetchOptions: {
+  //     cache: "no-store",
+  //   },
+  //   filters: { slug: { $eq: slug } },
+  // });
+
+  const post = blogs;
+  // const post = blogs[0];
 
   const getFont = async () => {
     const res = await fetch(
