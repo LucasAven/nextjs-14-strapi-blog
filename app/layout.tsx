@@ -13,6 +13,7 @@ import { getSingleType, StrapiSingleTypes } from "@/lib/strapi";
 export const metadata: Metadata = {
   description: PAGE_CONSTANTS.siteDescription,
   keywords: PAGE_CONSTANTS.siteKeywords,
+  metadataBase: new URL(PAGE_CONSTANTS.siteUrl),
   openGraph: {
     description: PAGE_CONSTANTS.siteDescription,
     siteName: PAGE_CONSTANTS.siteName,
