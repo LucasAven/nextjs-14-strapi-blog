@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     description: PAGE_CONSTANTS.siteDescription,
     title: PAGE_CONSTANTS.siteName,
   },
+  verification: {
+    google: "wjVBUw1VjRRZEW1i8k4my7vE0AbtcG85pFtFP_7rmSo",
+  },
 };
 
 export default async function RootLayout({
